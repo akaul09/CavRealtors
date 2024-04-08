@@ -9,7 +9,7 @@ require("request-db.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['username']) && $_POST["password"] === $_POST["confirmpassword"]) {
-        signup($_POST["username"], $_POST["password"]);
+        signup($_POST["fname"],$_POST["lname"],$_POST["username"], $_POST["password"]);
     }
 }
 
@@ -28,6 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 <div class="form">
     <form method="post" action="signup.php">
+    <div class="form-group">
+            <!-- <label for="exampleInputName1" class="text">Name</label> -->
+            <input type="name" class="form-control" id="exampleInputName1" placeholder="Enter first name" name="fname">
+        </div>
+        <br><div class="form-group">
+            <!-- <label for="exampleInputName1" class="text">Name</label> -->
+            <input type="name" class="form-control" id="exampleInputName1" placeholder="Enter last name" name="lname">
+        </div>
+        <br>
         <div class="form-group">
             <!-- <label for="exampleInputName1" class="text">Name</label> -->
             <input type="name" class="form-control" id="exampleInputName1" placeholder="Enter username" name="username">
