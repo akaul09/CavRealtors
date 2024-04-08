@@ -1,9 +1,9 @@
 <?php
-function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bedrooms, $squarefeet, $state, $county, $status)
+function addProperty($housestyle,$price)
+// $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status)
 {
     global $db;
     $query = "INSERT INTO Property (name, price) VALUES (:housestyle,:price)";  
-    $query2 = "INSERT INTO Location (Address, Locality, state) VALUES (:address,:county, :state)";  
 
     try { 
         // $statement = $db->query($query);   // compile & exe
@@ -11,18 +11,24 @@ function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bed
         // prepared statement
         // pre-compile
         $statement = $db->prepare($query);
-        $statement2 = $db->prepare($query2);
         // fill in the value
         $statement->bindValue(':housestyle', $housestyle);
         $statement->bindValue(':price', $price);
-        $statement2->bindValue(':address',$address);
-        $statement2->bindValue(':county',$county);
-        $statement2->bindValue(':state',$state);
+        
+        // $statement->bindValue(':status', $status);
+        // $statement->bindValue(':title', $title);
+        // $statement->bindValue(':Address', $Address);
+        // $statement->bindValue(':title', $title);
+        // $statement->bindValue(':bath', $bath);
+        // $statement->bindValue(':bed', $bed);
+        // $statement->bindValue(':sqft', $sqft);
+        // $statement->bindValue(':State', $State);
+        // $statement->bindValue(':Locality', $Locality);
+
         // exe
         $statement->execute();
         $statement->closeCursor();
-        $statement2->execute();
-        $statement2->closeCursor();
+       
      } catch (PDOException $e)
      {
         $e->getMessage();   // consider a generic message
@@ -34,7 +40,29 @@ function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bed
      }
 }
 
-
+function signup($username,$password){
+   global $db;
+   $temp = password_hash($password, PASSWORD_DEFAULT);
+   $query = "INSERT INTO NormalUser (username, pword) VALUES (:username, :pword)";
+   try { 
+   $statement = $db->prepare($query);
+        // fill in the value
+        $statement->bindValue(':username', $username);
+        $statement->bindValue(':pword', $temp);
+        $statement->execute();
+        $statement->closeCursor();
+       
+     } catch (PDOException $e)
+     {
+        $e->getMessage();   // consider a generic message
+        echo "$e";
+     } catch (Exception $e) 
+     {
+        $e->getMessage();   // consider a generic message
+        echo "$e";
+     }
+        
+}
 function getAllProperties()
 {
    global $db;

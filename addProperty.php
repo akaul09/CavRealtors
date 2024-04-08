@@ -8,8 +8,9 @@ require("request-db.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['bedrooms'])) {
-        addProperty($_POST["housestyle"], $_POST["price"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
+    if (!empty($_POST['price'])) {
+        addProperty($_POST["housestyle"], $_POST["price"]);
+        // $_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
 }
 
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <br><br>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" required>
                     <div class="invalid-feedback">
@@ -135,14 +136,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <br><br>
-                <br><br>
+                <br><br>-->
 
-                <button class="btn btn-primary" type="submit">Submit form</button>
+                <button class="btn btn-primary" type="submit">Submit form</button> 
             </form>
         </div>
 
 
-        <br /><br />
+        <br /><br /> 
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
