@@ -1,6 +1,31 @@
 <?php
-function addProperty(){
-    
+function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bedrooms, $squarefeet, $state, $county, $status)
+{
+    global $db;
+    $query = "INSERT INTO Property (name, price) VALUES (:housestyle,:price)";  
+    try { 
+        // $statement = $db->query($query);   // compile & exe
+  
+        // prepared statement
+        // pre-compile
+        $statement = $db->prepare($query);
+  
+        // fill in the value
+        $statement->bindValue(':housestyle', $housestyle);
+        $statement->bindValue(':price', $price);
+  
+        // exe
+        $statement->execute();
+        $statement->closeCursor();
+     } catch (PDOException $e)
+     {
+        $e->getMessage();   // consider a generic message
+        echo "$e";
+     } catch (Exception $e) 
+     {
+        $e->getMessage();   // consider a generic message
+        echo "$e";
+     }
 }
 function addRequests($reqDate, $roomNumber, $reqBy, $repairDesc, $reqPriority)
 {

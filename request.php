@@ -1,18 +1,15 @@
 <?php
-require("connect-db.php");    // include("connect-db.php");
+require("connect-db.php");
 require("request-db.php");
 ?>
 
 
-<?php   // form handling
+<?php
 
-// var_dump($list_of_requests);   // debug
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')   // GET
-{
-    if (!empty($_POST['AddProperty']))    // $_GET['....']
-    {
-        addProperty($_POST["Name"],);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['bedrooms'])) {
+        addProperty($_POST["housestyle"], $POST["price"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
 }
 
@@ -23,7 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')   // GET
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/[email protected]/dist/css/bootstrap.min.css" integrity="sha256-" crossorigin="anonymous">
 
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/js/bootstrap.bundle.min.js" integrity="sha256-gOQJIa9+K/" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -38,8 +38,105 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')   // GET
 
         <hr />
         <div class="container">
-            <form>
 
+            <form class="addProp" method="post" action="request.php">
+                <div class="mb-3">
+                    <label for="houseStyle" class="form-label">House Style</label>
+                    <input type="text" class="form-control" id="housestyle" name="housestyle" required>
+                    <div class="invalid-feedback">
+                        Please provide the style of the house.
+                    </div>
+                </div>
+                <br><br>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                    <div class="invalid-feedback">
+                        Please provide the Price of the house.
+                    </div>
+                </div>
+                <br><br>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                    <div class="invalid-feedback">
+                        Please provide the address.
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="brokerName" class="form-label">Broker Name</label>
+                    <input type="text" class="form-control" id="brokerName" name="brokerName" required>
+                    <div class="invalid-feedback">
+                        Please provide the name of the broker.
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="bathrooms" class="form-label">No. of Bathrooms</label>
+                    <input type="number" class="form-control" id="bathrooms" name="bathrooms" required>
+                    <div class="invalid-feedback">
+                        Please provide the number of bathrooms.
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="bedrooms" class="form-label">No. of Bedrooms</label>
+                    <input type="number" class="form-control" id="bedrooms" name="bedrooms" required>
+                    <div class="invalid-feedback">
+                        Please provide the number of bedrooms.
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="squareFeet" class="form-label">Sq ft.</label>
+                    <input type="number" class="form-control" id="squareFeet" name="squareFeet" required>
+                    <div class="invalid-feedback">
+                        Please provide the square footage.
+                    </div>
+                </div>
+                <br><br>
+
+
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" class="form-control" id="state" name="state" required>
+                    <div class="invalid-feedback">
+                        Location Information (State)
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="county" class="form-label">County</label>
+                    <input type="text" class="form-control" id="county" id="county" required>
+                    <div class="invalid-feedback">
+                        Please provide the county.
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option value="for_sale">For Sale</option>
+                        <option value="sold">Sold</option>
+                        <option value="pending">Pending</option>
+                        <option value="not_available">Not Available</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select the status of the house.
+                    </div>
+                </div>
+                <br><br>
+                <br><br>
+
+                <button class="btn btn-primary" type="submit">Submit form</button>
             </form>
         </div>
 
