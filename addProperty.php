@@ -9,7 +9,7 @@ require("request-db.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['bedrooms'])) {
-        addProperty($_POST["housestyle"], $POST["price"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
+        addProperty($_POST["housestyle"], $_POST["price"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
 }
 
@@ -39,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <hr />
         <div class="container">
 
-            <form class="addProp" method="post" action="request.php">
-                <div class="mb-3">
+            <form class="addProp" method="post" action="addProperty.php">
+                
+            <div class="mb-3">
                     <label for="houseStyle" class="form-label">House Style</label>
                     <input type="text" class="form-control" id="housestyle" name="housestyle" required>
                     <div class="invalid-feedback">

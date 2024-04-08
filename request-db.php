@@ -3,20 +3,26 @@ function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bed
 {
     global $db;
     $query = "INSERT INTO Property (name, price) VALUES (:housestyle,:price)";  
+    $query2 = "INSERT INTO Location (Address, Locality, state) VALUES (:address,:county, :state)";  
+
     try { 
         // $statement = $db->query($query);   // compile & exe
   
         // prepared statement
         // pre-compile
         $statement = $db->prepare($query);
-  
+        $statement2 = $db->prepare($query2);
         // fill in the value
         $statement->bindValue(':housestyle', $housestyle);
         $statement->bindValue(':price', $price);
-  
+        $statement2->bindValue(':address',$address);
+        $statement2->bindValue(':county',$county);
+        $statement2->bindValue(':state',$state);
         // exe
         $statement->execute();
         $statement->closeCursor();
+        $statement2->execute();
+        $statement2->closeCursor();
      } catch (PDOException $e)
      {
         $e->getMessage();   // consider a generic message
@@ -27,47 +33,12 @@ function addProperty($housestyle,$price, $address, $brokername, $bathrooms, $bed
         echo "$e";
      }
 }
-function addRequests($reqDate, $roomNumber, $reqBy, $repairDesc, $reqPriority)
-{
-   global $db;   
-   $reqDate = date('Y-m-d');      // ensure proper data type before inserting it into a db
-   
-   // $query = "INSERT INTO requests (reqDate, roomNumber, reqBy, repairDesc, reqPriority) VALUES ('2024-03-18', 'CCC', 'Someone', 'fix light', 'medium')";
-   // $query = "INSERT INTO requests (reqDate, roomNumber, reqBy, repairDesc, reqPriority) VALUES ('" . $reqDate . "', '" . $roomNumber . "', '" . $reqBy . "', '" . $repairDesc . "', '" . $reqPriority . "')";  
-    
-   $query = "INSERT INTO requests (reqDate, roomNumber, reqBy, repairDesc, reqPriority) VALUES (:reqDate, :roomNumber, :reqBy, :repairDesc, :reqPriority)";  
-   
-   try { 
-      // $statement = $db->query($query);   // compile & exe
 
-      // prepared statement
-      // pre-compile
-      $statement = $db->prepare($query);
 
-      // fill in the value
-      $statement->bindValue(':reqDate', $reqDate);
-      $statement->bindValue(':roomNumber', $roomNumber);
-      $statement->bindValue(':reqBy',$reqBy);
-      $statement->bindValue(':repairDesc', $repairDesc);
-      $statement->bindValue(':reqPriority', $reqPriority);
-
-      // exe
-      $statement->execute();
-      $statement->closeCursor();
-   } catch (PDOException $e)
-   {
-      $e->getMessage();   // consider a generic message
-   } catch (Exception $e) 
-   {
-      $e->getMessage();   // consider a generic message
-   }
-
-}
-
-function getAllRequests()
+function getAllProperties()
 {
    global $db;
-   $query = "select * from requests";    
+   $query = "select * from Property";    
    $statement = $db->prepare($query);    // compile
    $statement->execute();
    $result = $statement->fetchAll();     // fetch()
@@ -89,31 +60,5 @@ function getRequestById($id)
    return $result;
 }
 
-function updateRequest($reqId, $reqDate, $roomNumber, $reqBy, $repairDesc, $reqPriority)
-{
-   global $db;
-   $query = "update requests set reqDate=:reqDate, roomNumber=:roomNumber, 
-   reqBy=:reqBy, repairDesc=:repairDesc, reqPriority=:reqPriority where reqId=:reqId" ; 
-
-   $statement = $db->prepare($query);
-   $statement->bindValue(':reqId', $reqId);
-   $statement->bindValue(':reqDate', $reqDate);
-   $statement->bindValue(':roomNumber', $roomNumber);
-   $statement->bindValue(':reqBy',$reqBy);
-   $statement->bindValue(':repairDesc', $repairDesc);
-   $statement->bindValue(':reqPriority', $reqPriority);
-
-   $statement->execute();
-   $statement->closeCursor();
-
-
-
-}
-
-function deleteRequest($reqId)
-{
-
-    
-}
 
 ?>
