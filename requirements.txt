@@ -1,1 +1,3 @@
-i
+Param: Split login and sign up; ensure both work fine that is the login takes you to view all properties; get property detail; get all properties;
+Rachit: view all properties screen including filter, search etc..
+Pravesh: add property; update property view; landing page
