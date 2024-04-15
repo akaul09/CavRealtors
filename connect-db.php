@@ -38,10 +38,10 @@
 ////////////////////////////////////////////
 
 /** S24, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
-$username = 'jpg5wq'; 
+$username = 'zex8py'; 
 $password = 'Spring2024';
 $host = 'mysql01.cs.virginia.edu';
-$dbname = 'jpg5wq_c';
+$dbname = 'zex8py_b';
 $dsn = "mysql:host=$host;dbname=$dbname";
 
 ////////////////////////////////////////////
