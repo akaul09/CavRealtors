@@ -1,20 +1,22 @@
 <?php
 require("connect-db.php");
 require("request-db.php");
-?>
-<?php
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $properties = getAllProperties();
 }
-
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>View all Properties</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Listings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { padding-top: 20px; }
+        .card { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -32,28 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         </div>
     </div>
     
+    <?php foreach ($properties as $property): ?>
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md">
-                <?php foreach($properties as $property):?>
-                    <h3 class="card-title"><?php echo ($property['name']); ?></h3>
+                <div class="col-md-4">
+                    <img src="<?php echo htmlspecialchars($property['image_url']); ?>" alt="Property Image" class="img-fluid">
+                </div>
+                <div class="col-md-8">
+                    <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
                     <p class="card-text">
-                        <strong>Location:</strong> <?php echo ($property['price']); ?> <br>
+                        <strong>Rating:</strong> <?php echo htmlspecialchars($property['rating']); ?> <br>
+                        <strong>Location:</strong> <?php echo htmlspecialchars($property['location']); ?> <br>
+                        <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
+                        <strong>Capacity:</strong> <?php echo htmlspecialchars($property['capacity']); ?> <br>
+                        <strong>Beds/Baths:</strong> <?php echo htmlspecialchars($property['bedrooms']); ?>/<?php echo htmlspecialchars($property['bathrooms']); ?>
                     </p>
-                    <?php endforeach; ?>
-
                 </div>
             </div>
         </div>
     </div>
+    <?php endforeach; ?>
  
 </div>
-<!-- Bootstrap JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
