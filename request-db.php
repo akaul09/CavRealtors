@@ -62,12 +62,19 @@ function signupAdmin($fname, $lname, $username, $password) {
 
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
+      $_SESSION["username"] = $username;
+      $_SESSION["type"] = 1;
+      header("Location: viewProperty.php");
    } catch (PDOException $e) {
       $e->getMessage();   // consider a generic message
       echo "$e";
+      header("Location: signup.php?error=invalid");
+      exit();
    } catch (Exception $e) {
       $e->getMessage();   // consider a generic message
       echo "$e";
+      header("Location: signup.php?error=invalid");
+      exit();
    }
 }
 function signupNormal($fname, $lname, $username, $password) {
@@ -96,69 +103,73 @@ function signupNormal($fname, $lname, $username, $password) {
 
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
+      $_SESSION["username"] = $username;
+      $_SESSION["type"] = 1;
+      header("Location: viewProperty.php");
+      exit();
    } catch (PDOException $e) {
       $e->getMessage();   // consider a generic message
       echo "$e";
+      header("Location: signup.php?error=invalid");
+      exit();
    } catch (Exception $e) {
       $e->getMessage();   // consider a generic message
       echo "$e";
+      header("Location: signup.php?error=invalid");
+      exit();
    }
 }
-function Adminlogin($username, $password){
+function Adminlogin($username, $password) {
    global $db;
    if (
       !empty($username) && !empty($password)
-  ) {
+   ) {
       $query = "select * from Admin where username = :username;";
       $statement = $db->prepare($query);
-      $statement->bindValue(':username',$username);
+      $statement->bindValue(':username', $username);
       $statement->execute();
-      $res= $statement->fetchAll();
+      $res = $statement->fetchAll();
       $statement->closeCursor();
       if (!empty($res)) {
-          if (password_verify($password, $res[0]["pword"])) {
-              // Password was correct, save their information to the
-              // session and send them to the question page
-              $_SESSION["username"] = $res[0]["username"];
-              $_SESSION["type"] = 1;
-              header("Location: viewProperty.php");
-              exit();
-          }
-          else{
+         if (password_verify($password, $res[0]["pword"])) {
+            // Password was correct, save their information to the
+            // session and send them to the question page
+            $_SESSION["username"] = $res[0]["username"];
+            $_SESSION["type"] = 1;
+            header("Location: viewProperty.php");
+            exit();
+         } else {
             header("Location: adminLogin.php?error=invalid_credentials");
             exit();
-          } 
-
          }
       }
+   }
 }
-function custLogin($username, $password){
+function custLogin($username, $password) {
    global $db;
    if (
       !empty($username) && !empty($password)
-  ) {
+   ) {
       $query = "select * from NormalUser where username = :username;";
       $statement = $db->prepare($query);
-      $statement->bindValue(':username',$username);
+      $statement->bindValue(':username', $username);
       $statement->execute();
-      $res= $statement->fetchAll();
+      $res = $statement->fetchAll();
       $statement->closeCursor();
       if (!empty($res)) {
-          if (password_verify($password, $res[0]["pword"])) {
-              // Password was correct, save their information to the
-              // session and send them to the question page
-              $_SESSION["username"] = $res[0]["username"];
-              $_SESSION["type"] = 1;
-              header("Location: viewProperty.php");
-              exit();
-          }
-          else{
+         if (password_verify($password, $res[0]["pword"])) {
+            // Password was correct, save their information to the
+            // session and send them to the question page
+            $_SESSION["username"] = $res[0]["username"];
+            $_SESSION["type"] = 1;
+            header("Location: viewProperty.php");
+            exit();
+         } else {
             header("Location: custLogin.php?error=invalid_credentials");
             exit();
-          } 
-
          }
       }
+   }
 }
 function getAllProperties() {
    global $db;
@@ -167,11 +178,11 @@ function getAllProperties() {
    $statement->execute();
    $result = $statement->fetchAll();     // fetch()
    $statement->closeCursor();
-   foreach($result as $key=>$property){
+   foreach ($result as $key => $property) {
       $pid = $property["pid"];
       $featuresquery = "SELECT * FROM Features WHERE pid=:pid";
-      $statement2= $db->prepare($featuresquery);
-      $statement2->bindValue(':pid',$pid);
+      $statement2 = $db->prepare($featuresquery);
+      $statement2->bindValue(':pid', $pid);
       $statement2->execute();
       $features = $statement2->fetchAll();
       $statement2->closeCursor();
@@ -179,12 +190,11 @@ function getAllProperties() {
          $result[$key]["bed"] = $features[0]["bed"];
          $result[$key]["bath"] = $features[0]["bath"];
          $result[$key]["sqft"] = $features[0]["sqft"];
-
       } else {
          $result[$key]["bed"] = "Bed info not found";
          $result[$key]["bath"] = "Bath info not found";
          $result[$key]["sqft"] = "Sqft info not found";
-     }
+      }
    }
    return $result;
 }

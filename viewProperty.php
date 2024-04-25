@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $properties = getAllProperties();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
