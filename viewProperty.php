@@ -38,13 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4">
-                    <img src="<?php echo htmlspecialchars($property['image_url']); ?>" alt="Property Image" class="img-fluid">
-                </div>
                 <div class="col-md-8">
                     <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
                     <p class="card-text">
-                        <strong>Rating:</strong> <?php echo htmlspecialchars($property['rating']); ?> <br>
                         <strong>Location:</strong> <?php echo htmlspecialchars($property['location']); ?> <br>
                         <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
                         <strong>Capacity:</strong> <?php echo htmlspecialchars($property['capacity']); ?> <br>
