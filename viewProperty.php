@@ -29,9 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <div class="col-md-8">
             <input class="form-control" type="search" placeholder="Search properties">
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary float-right">Map View</button>
-        </div>
     </div>
     
     <?php foreach ($properties as $property): ?>
@@ -42,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
                     <p class="card-text">
                         <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
-                        <strong>Capacity:</strong> <?php echo htmlspecialchars($property['sqft']); ?> <br>
-                        <strong>Beds/Baths:</strong> <?php echo htmlspecialchars($property['bed']); ?>/<?php echo htmlspecialchars($property['bath']); ?>
+                        <strong>Squarefeet:</strong> <?php echo htmlspecialchars($property['sqft']); ?> <br>
+                        <strong>Beds:</strong> <?php echo htmlspecialchars($property['bed']); ?> <br>
+                        <strong>Bathrooms:</strong> <?php echo htmlspecialchars($property['bath']); ?> <br>
                     </p>
                 </div>
             </div>
