@@ -1,6 +1,8 @@
 - Use all tables in some way
 - implement database security -- can be done by some constraint or role based access control
-- have some personalized data for each returning user
+- have some personalized data for each returning user (Param)
+- Add property (Rachit)
+- Delete property for only the properties that the admin added (Rachit)
 - retrieve/add/update/delete from the table
-- Do search/sort for properties
-- do export properties as json
+- Do search/sort for properties (Pravesh)
+- do export properties as json (Param)
