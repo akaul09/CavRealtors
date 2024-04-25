@@ -9,7 +9,7 @@ require("request-db.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['username']) && $_POST["password"]) {
-        adminLogin($_POST["username"], $_POST["password"]);
+        custLogin($_POST["username"], $_POST["password"]);
     }
 }
 
@@ -24,12 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/js/bootstrap.bundle.min.js" integrity="sha256-gOQJIa9+K/" crossorigin="anonymous"></script>
-    <title>Admin Login</title>
+    <title>Customer Login</title>
 </head>
 </body>
 <div class="form">
-    <form method="post" action="adminLogin.php">
-        <h1>Admin Login</h1>
+    <form method="post" action="custLogin.php">
+        <h1>Customer login</h1>
         <div class="form-group">
             <!-- <label for="exampleInputName1" class="text">Name</label> -->
             <input type="name" class="form-control" id="exampleInputName1" placeholder="Enter username" name="username">

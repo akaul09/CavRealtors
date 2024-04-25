@@ -132,6 +132,34 @@ function Adminlogin($username, $password){
          }
       }
 }
+function custLogin($username, $password){
+   global $db;
+   if (
+      !empty($username) && !empty($password)
+  ) {
+      $query = "select * from NormalUser where username = :username;";
+      $statement = $db->prepare($query);
+      $statement->bindValue(':username',$username);
+      $statement->execute();
+      $res= $statement->fetchAll();
+      $statement->closeCursor();
+      if (!empty($res)) {
+          if (password_verify($password, $res[0]["pword"])) {
+              // Password was correct, save their information to the
+              // session and send them to the question page
+              $_SESSION["username"] = $res[0]["username"];
+              $_SESSION["type"] = 1;
+              header("Location: viewProperty.php");
+              exit();
+          }
+          else{
+            header("Location: custLogin.php?error=invalid_credentials");
+            exit();
+          } 
+
+         }
+      }
+}
 function getAllProperties() {
    global $db;
    $query = "select * from Property";
