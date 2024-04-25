@@ -1,83 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CavRealtors - Home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find your property at CavRealtors">
+    <meta name="keywords" content="Real Estate property listing">
+    <title>Welcome to CavRealtors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="landing.css">
     <style>
-      body, html {
-        height: 100%; 
-        margin: 0; 
-      }
-      .page-content {
-        padding-bottom: 70px; 
-      }
-      .footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: #f5f5f5; 
-      }
-      .footer a {
-        margin: 0 10px;
-      }
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+        }
+        .footer a {
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
-    <a class="navbar-brand" href="index.php">CavRealtors</a>
-    <a href="signup.php" class="btn btn-outline-primary my-2 my-lg-0" role="button">Sign In</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="landing.php">CavRealtors</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+            aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarContent">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="viewProperty.php">Search <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="viewProperty.php">Search</a>
             <a class="nav-item nav-link" href="viewProperty.php">Browse Listings</a>
+            <a href="signup.php" class="btn btn-outline-primary my-2 my-lg-0" role="button">Sign In</a>
         </div>
     </div>
 </nav>
 
-<div class="container-fluid page-content">
+<div class="container-fluid">
     <div class="row my-4">
-        <div class="col-12 col-md-6 order-md-2">
-            <div class="search-container">
-                <h2>Easy Navigation</h2>
-                <p>Locate your perfect property.</p>
-                <a href="viewProperty.php" class="btn btn-primary">Search Now</a>
-            </div>
+        <div class="col-12 text-center">
+            <h1>Explore Your Dream Home</h1>
+            <p>Find properties in a snap.</p>
+            <a href="viewProperty.php" class="btn btn-primary">Start Your Search</a>
         </div>
     </div>
-
     <div class="row text-center my-4">
         <div class="col-12 col-md-4">
-            <i class="feature-icon"></i> 
             <h3>Detailed Listings</h3>
             <p>Every home detail, from price to amenities, at a glance.</p>
         </div>
         <div class="col-12 col-md-4">
-            <i class="feature-icon"></i>
             <h3>Custom Searches</h3>
             <p>Filter by location, price, or property type effortlessly.</p>
         </div>
         <div class="col-12 col-md-4">
-            <i class="feature-icon"></i>
             <h3>Easy to use</h3>
             <p>Simple features make property viewing accessible to everyone.</p>
         </div>
     </div>
-
-    <div class="commitment-section my-4 text-center">
+    <div class="text-center my-4">
         <h2>Our Commitment</h2>
         <p>Dedicated to simplifying your home-buying experience with the most up-to-date and verified data.</p>
     </div>
 </div>
 
-<footer class="footer py-3">
-    <div class="container text-center">
+<footer class="footer py-3 text-center">
+    <div class="container">
         <span class="text-muted">© 2024 CavRealtors - All Rights Reserved.</span>
         <div class="float-right">
             <a href="#" class="text-muted">Privacy Policy</a> |
