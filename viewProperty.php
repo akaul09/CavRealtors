@@ -41,10 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <div class="col-md-8">
                     <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
                     <p class="card-text">
-                        <strong>Location:</strong> <?php echo htmlspecialchars($property['location']); ?> <br>
                         <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
-                        <strong>Capacity:</strong> <?php echo htmlspecialchars($property['capacity']); ?> <br>
-                        <strong>Beds/Baths:</strong> <?php echo htmlspecialchars($property['bedrooms']); ?>/<?php echo htmlspecialchars($property['bathrooms']); ?>
+                        <strong>Capacity:</strong> <?php echo htmlspecialchars($property['sqft']); ?> <br>
+                        <strong>Beds/Baths:</strong> <?php echo htmlspecialchars($property['bed']); ?>/<?php echo htmlspecialchars($property['bath']); ?>
                     </p>
                 </div>
             </div>

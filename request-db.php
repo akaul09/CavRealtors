@@ -78,7 +78,25 @@ function getAllProperties() {
    $statement->execute();
    $result = $statement->fetchAll();     // fetch()
    $statement->closeCursor();
+   foreach($result as $key=>$property){
+      $pid = $property["pid"];
+      $featuresquery = "SELECT * FROM Features WHERE pid=:pid";
+      $statement2= $db->prepare($featuresquery);
+      $statement2->bindValue(':pid',$pid);
+      $statement2->execute();
+      $features = $statement2->fetchAll();
+      $statement2->closeCursor();
+      if (!empty($features)) {
+         $result[$key]["bed"] = $features[0]["bed"];
+         $result[$key]["bath"] = $features[0]["bath"];
+         $result[$key]["sqft"] = $features[0]["sqft"];
 
+      } else {
+         $result[$key]["bed"] = "Bed info not found";
+         $result[$key]["bath"] = "Bath info not found";
+         $result[$key]["sqft"] = "Sqft info not found";
+     }
+   }
    return $result;
 }
 
