@@ -28,9 +28,11 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
     <a class="navbar-brand" href="index.php">CavRealtors</a>
+    <a href="signup.php" class="btn btn-outline-primary my-2 my-lg-0" role="button">Sign In</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link active" href="viewProperty.php">Search <span class="sr-only">(current)</span></a>
