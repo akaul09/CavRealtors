@@ -138,3 +138,11 @@
 .btn-outline-primary {
   margin-left: auto; 
 }
+
+.full-height-image {
+  background-image: url('assets/homeImage.jpg');
+  background-size: contain; 
+  background-position: center;
+  min-height: 300px;
+  width: 100%; 
+}

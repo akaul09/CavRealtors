@@ -24,6 +24,12 @@
         .footer a {
             margin: 0 10px;
         }
+        .full-height-image {
+            background-image: url('assets/homeImage.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px; /* Adjust this value based on your needs */
+        }
     </style>
 </head>
 <body>
@@ -43,7 +49,6 @@
         <a href="signup.php" class="btn btn-bordered" role="button">Sign In</a>
     </div>
 </nav>
-
 
 <div class="container-fluid">
     <div class="row my-4">
@@ -71,11 +76,12 @@
         <h2>Our Commitment</h2>
         <p>Dedicated to simplifying your home-buying experience with the most up-to-date and verified data.</p>
     </div>
+    <div class="full-height-image"></div>
 </div>
 
 <footer class="footer py-3 text-center">
     <div class="container">
-    <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">
+        <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">
         <span class="text-muted">© 2024 CavRealtors - All Rights Reserved.</span>
         <div class="float-right">
             <a href="#" class="text-muted">Privacy Policy</a> |
@@ -83,8 +89,6 @@
         </div>
     </div>
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net
