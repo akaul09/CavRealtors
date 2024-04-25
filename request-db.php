@@ -36,8 +36,41 @@ function addProperty($housestyle, $price)
       echo "$e";
    }
 }
+function signupAdmin($fname, $lname, $username, $password) {
+   global $db;
+   $temp = password_hash($password, PASSWORD_DEFAULT);
+   $db->beginTransaction();
+   $adminpermissiontype = 0;
+   try {
+      $queryUser = "INSERT INTO User (fname, lname, permissionType) VALUES (:fname, :lname, :permissionType)";
+      $statementUser = $db->prepare($queryUser);
+      $statementUser->bindValue(':fname', $fname);
+      $statementUser->bindValue(':lname', $lname);
+      $statementUser->bindValue(':permissionType', $adminpermissiontype);
+      $statementUser->execute();
 
-function signup($fname, $lname, $username, $password) {
+      $userID = $db->lastInsertId();
+
+      $queryAdminUser = "INSERT INTO Admin (userID, username, pword) VALUES (:userID, :username, :pword)";
+      $statementNormalUser = $db->prepare($queryAdminUser);
+      $statementNormalUser->bindValue(':userID', $userID);
+      $statementNormalUser->bindValue(':username', $username);
+      $statementNormalUser->bindValue(':pword', $temp);
+
+      $statementNormalUser->execute();
+      $db->commit();
+
+      $statementUser->closeCursor();
+      $statementNormalUser->closeCursor();
+   } catch (PDOException $e) {
+      $e->getMessage();   // consider a generic message
+      echo "$e";
+   } catch (Exception $e) {
+      $e->getMessage();   // consider a generic message
+      echo "$e";
+   }
+}
+function signupNormal($fname, $lname, $username, $password) {
    global $db;
    $temp = password_hash($password, PASSWORD_DEFAULT);
    $db->beginTransaction();
@@ -70,6 +103,34 @@ function signup($fname, $lname, $username, $password) {
       $e->getMessage();   // consider a generic message
       echo "$e";
    }
+}
+function Adminlogin($username, $password){
+   global $db;
+   if (
+      !empty($username) && !empty($password)
+  ) {
+      $query = "select * from Admin where username = :username;";
+      $statement = $db->prepare($query);
+      $statement->bindValue(':username',$username);
+      $statement->execute();
+      $res= $statement->fetchAll();
+      $statement->closeCursor();
+      if (!empty($res)) {
+          if (password_verify($password, $res[0]["pword"])) {
+              // Password was correct, save their information to the
+              // session and send them to the question page
+              $_SESSION["username"] = $res[0]["username"];
+              $_SESSION["type"] = 1;
+              header("Location: viewProperty.php");
+              exit();
+          }
+          else{
+            header("Location: adminLogin.php?error=invalid_credentials");
+            exit();
+          } 
+
+         }
+      }
 }
 function getAllProperties() {
    global $db;

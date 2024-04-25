@@ -8,8 +8,11 @@ require("request-db.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['username']) && $_POST["password"] === $_POST["confirmpassword"]) {
-        signup($_POST["fname"],$_POST["lname"],$_POST["username"], $_POST["password"]);
+    if (!empty($_POST['username']) && $_POST["password"] === $_POST["confirmpassword"] && $_POST["adminpassword"]==="partylife") {
+        signupAdmin($_POST["fname"],$_POST["lname"],$_POST["username"], $_POST["password"]);
+    }
+    else if (!empty($_POST['username']) && $_POST["password"] === $_POST["confirmpassword"]) {
+        signupNormal($_POST["fname"],$_POST["lname"],$_POST["username"], $_POST["password"]);
     }
 }
 
@@ -52,9 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Confirm Password" name="confirmpassword">
         </div>
         <br>
-        
+        <div class="form-group">
+            <!-- <label for="exampleInputEmail1" class="text">Email address</label> -->
+            <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Admin Password (Leave blank if signing up as normal user)" name="adminpassword">
+        </div>
+        <br>
         <button type="submit" class="btn btn-primary" style="background-color: #00848a">
-            Sign In
+            Sign Up
         </button>
     </form>
 </div>

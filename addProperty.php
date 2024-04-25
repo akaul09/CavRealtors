@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <hr />
         <div class="container">
 
-            <form class="addProp" method="post" action="request.php">
+            <form class="addProp" method="post" action="request-db.php">
                 <div class="mb-3">
 
             <div class="mb-3">
