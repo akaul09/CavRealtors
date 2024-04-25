@@ -38,7 +38,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link" href="viewProperty.php">Browse Listings</a>
+            <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
         </div>
         <a href="signup.php" class="btn btn-bordered" role="button">Sign In</a>
     </div>
@@ -75,6 +75,7 @@
 
 <footer class="footer py-3 text-center">
     <div class="container">
+    <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">
         <span class="text-muted">© 2024 CavRealtors - All Rights Reserved.</span>
         <div class="float-right">
             <a href="#" class="text-muted">Privacy Policy</a> |
