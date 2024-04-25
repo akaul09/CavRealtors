@@ -123,3 +123,18 @@
   font-weight: 600;
   border-radius: 4px;
 }
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  margin-right: 10px; 
+}
+
+.navbar-nav {
+  margin-right: auto; 
+}
+.btn-outline-primary {
+  margin-left: auto; 
+}

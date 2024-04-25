@@ -29,19 +29,21 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="landing.php">CavRealtors</a>
+    <a class="navbar-brand" href="landing.php">
+        <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link" href="viewProperty.php">Search</a>
             <a class="nav-item nav-link" href="viewProperty.php">Browse Listings</a>
-            <a href="signup.php" class="btn btn-outline-primary my-2 my-lg-0" role="button">Sign In</a>
         </div>
+        <a href="signup.php" class="btn btn-bordered" role="button">Sign In</a>
     </div>
 </nav>
+
 
 <div class="container-fluid">
     <div class="row my-4">
