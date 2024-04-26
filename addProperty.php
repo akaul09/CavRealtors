@@ -3,11 +3,11 @@ require("connect-db.php");
 require("request-db.php");
 ?>
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['bedrooms'])) {
-        addProperty($_POST["housestyle"], $_POST["price"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
+    if (!empty($_POST['housestyle'])) {
+        addProperty($_POST["housestyle"], $_POST["price"],$_POST["name"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
+
 }
 
 ?>
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <hr />
         <div class="container">
 
-            <form class="addProp" method="post" action="request-db.php">
+            <form class="addProp" method="post" action="addProperty.php">
                 <div class="mb-3">
 
             <div class="mb-3">

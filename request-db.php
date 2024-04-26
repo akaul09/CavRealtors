@@ -1,41 +1,96 @@
 <?php
-function addProperty($housestyle, $price)
-// $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status)
-{
+// function addProperty($housestyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status)
+// {
+//    global $db;
+
+//    try {
+//       // $statement = $db->query($query);   // compile & exe
+
+//       // prepared statement
+//       // pre-compile
+//       // $query = "CALL AddProperty(housestyle, status, title, bath, bed, sqft, Address, Locality, State)";
+
+//       // $statement = $db->prepare($query);
+//       // // fill in the value
+//       // $statement->bindValue(':housestyle', $housestyle);
+//       // $statement->bindValue(':price', $price);
+
+//       // $statement->bindValue(':title', $title);
+//       // $statement->bindValue(':Address', $Address);
+//       // $statement->bindValue(':title', $title);
+//       // $statement->bindValue(':bath', $bath);
+//       // $statement->bindValue(':bed', $bed);
+//       // $statement->bindValue(':sqft', $sqft);
+//       // $statement->bindValue(':State', $State);
+//       // $statement->bindValue(':Locality', $Locality);
+//       // $statement->bindValue(':status', $status);
+//       // // exe
+//       // $statement->execute();
+//       // $statement->closeCursor();
+//       $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+//       $statement = $db->prepare($query);
+  
+//       // Bind parameters to the SQL statement
+//       $statement->bindValue(':housestyle', $houseStyle);
+//       $statement->bindValue(':price', $price);
+//       $statement->bindValue(':name', $name);
+//       $statement->bindValue(':Address', $Address);
+//       $statement->bindValue(':title', $title);
+//       $statement->bindValue(':bath', $bath);
+//       $statement->bindValue(':bed', $bed);
+//       $statement->bindValue(':sqft', $sqft);
+//       $statement->bindValue(':State', $State);
+//       $statement->bindValue(':Locality', $Locality);
+//       $statement->bindValue(':status', $status);
+  
+//       // Execute the stored procedure
+//       $statement->execute();
+  
+//       $statement->closeCursor();  // Close the cursor to free connection resources
+//       $db->commit(); 
+//    } catch (PDOException $e) {
+//       $e->getMessage();   // consider a generic message
+//       echo "$e";
+//    } catch (Exception $e) {
+//       $e->getMessage();   // consider a generic message
+//       echo "$e";
+//    }
+// }
+function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
-   $query = "INSERT INTO Property (name, price) VALUES (:housestyle,:price)";
+   $db->beginTransaction();  // Start the transaction
 
    try {
-      // $statement = $db->query($query);   // compile & exe
+       echo "Preparing to execute stored procedure...";
+       $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+       $statement = $db->prepare($query);
 
-      // prepared statement
-      // pre-compile
-      $statement = $db->prepare($query);
-      // fill in the value
-      $statement->bindValue(':housestyle', $housestyle);
-      $statement->bindValue(':price', $price);
+       // Bind parameters
+       $statement->bindValue(':housestyle', $houseStyle);
+       $statement->bindValue(':price', $price);
+       $statement->bindValue(':name', $name);
+       $statement->bindValue(':Address', $Address);
+       $statement->bindValue(':title', $title);
+       $statement->bindValue(':bath', $bath);
+       $statement->bindValue(':bed', $bed);
+       $statement->bindValue(':sqft', $sqft);
+       $statement->bindValue(':State', $State);
+       $statement->bindValue(':Locality', $Locality);
+       $statement->bindValue(':status', $status);
 
-      // $statement->bindValue(':status', $status);
-      // $statement->bindValue(':title', $title);
-      // $statement->bindValue(':Address', $Address);
-      // $statement->bindValue(':title', $title);
-      // $statement->bindValue(':bath', $bath);
-      // $statement->bindValue(':bed', $bed);
-      // $statement->bindValue(':sqft', $sqft);
-      // $statement->bindValue(':State', $State);
-      // $statement->bindValue(':Locality', $Locality);
-
-      // exe
-      $statement->execute();
-      $statement->closeCursor();
+      
+       $statement->execute();
+       echo "Stored procedure executed.";
+       $db->commit();  // Commit the transaction
+       $statement->closeCursor();  // Close the cursor to free connection resources
    } catch (PDOException $e) {
-      $e->getMessage();   // consider a generic message
-      echo "$e";
+       $db->rollBack(); // Roll back the transaction on error
+       echo "PDOException: " . $e->getMessage();
    } catch (Exception $e) {
-      $e->getMessage();   // consider a generic message
-      echo "$e";
+       echo "Exception: " . $e->getMessage();
    }
 }
+
 function signupAdmin($fname, $lname, $username, $password) {
    global $db;
    $temp = password_hash($password, PASSWORD_DEFAULT);
