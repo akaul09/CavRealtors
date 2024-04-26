@@ -63,7 +63,7 @@ function signupAdmin($fname, $lname, $username, $password) {
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
       $_SESSION["username"] = $username;
-      $_SESSION["type"] = 1;
+      $_SESSION["type"] = "admin";
       header("Location: viewProperty.php");
    } catch (PDOException $e) {
       $e->getMessage();   // consider a generic message
@@ -104,7 +104,7 @@ function signupNormal($fname, $lname, $username, $password) {
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
       $_SESSION["username"] = $username;
-      $_SESSION["type"] = 1;
+      $_SESSION["type"] = "customer";
       header("Location: viewProperty.php");
       exit();
    } catch (PDOException $e) {
@@ -134,9 +134,9 @@ function Adminlogin($username, $password) {
          if (password_verify($password, $res[0]["pword"])) {
             // Password was correct, save their information to the
             // session and send them to the question page
-            $_SESSION["username"] = $res[0]["username"];
-            $_SESSION["type"] = 1;
-            header("Location: viewProperty.php");
+            $_SESSION["username"] = $username;
+            $_SESSION["type"] ="Admin";
+            header("Location: profile.php");
             exit();
          } else {
             header("Location: adminLogin.php?error=invalid_credentials");
@@ -144,6 +144,9 @@ function Adminlogin($username, $password) {
          }
       }
    }
+}
+function logout(){
+
 }
 function custLogin($username, $password) {
    global $db;
@@ -158,11 +161,12 @@ function custLogin($username, $password) {
       $statement->closeCursor();
       if (!empty($res)) {
          if (password_verify($password, $res[0]["pword"])) {
-            // Password was correct, save their information to the
-            // session and send them to the question page
-            $_SESSION["username"] = $res[0]["username"];
-            $_SESSION["type"] = 1;
-            header("Location: viewProperty.php");
+            // Instead of setting session variables, we output JavaScript.
+            echo "<script>
+                    localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
+                    localStorage.setItem('type', 'Customer');
+                    window.location.href = 'profile.php';
+                  </script>";
             exit();
          } else {
             header("Location: custLogin.php?error=invalid_credentials");
