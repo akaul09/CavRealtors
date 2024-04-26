@@ -33,22 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     </div>
     
     <?php foreach ($properties as $property): ?>
-    <div class="card">
+    <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" class="card" style="text-decoration: none; color: inherit;">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
                     <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
                     <p class="card-text">
                         <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
-                        <strong>Squarefeet:</strong> <?php echo htmlspecialchars($property['sqft']); ?> <br>
-                        <strong>Beds:</strong> <?php echo htmlspecialchars($property['bed']); ?> <br>
-                        <strong>Bathrooms:</strong> <?php echo htmlspecialchars($property['bath']); ?> <br>
+                        
                     </p>
                 </div>
             </div>
         </div>
-    </div>
-    <?php endforeach; ?>
+    </a>
+<?php endforeach; ?>
  
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

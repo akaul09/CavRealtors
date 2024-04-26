@@ -1,93 +1,36 @@
 <?php
-// function addProperty($housestyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status)
-// {
-//    global $db;
-
-//    try {
-//       // $statement = $db->query($query);   // compile & exe
-
-//       // prepared statement
-//       // pre-compile
-//       // $query = "CALL AddProperty(housestyle, status, title, bath, bed, sqft, Address, Locality, State)";
-
-//       // $statement = $db->prepare($query);
-//       // // fill in the value
-//       // $statement->bindValue(':housestyle', $housestyle);
-//       // $statement->bindValue(':price', $price);
-
-//       // $statement->bindValue(':title', $title);
-//       // $statement->bindValue(':Address', $Address);
-//       // $statement->bindValue(':title', $title);
-//       // $statement->bindValue(':bath', $bath);
-//       // $statement->bindValue(':bed', $bed);
-//       // $statement->bindValue(':sqft', $sqft);
-//       // $statement->bindValue(':State', $State);
-//       // $statement->bindValue(':Locality', $Locality);
-//       // $statement->bindValue(':status', $status);
-//       // // exe
-//       // $statement->execute();
-//       // $statement->closeCursor();
-//       $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
-//       $statement = $db->prepare($query);
-  
-//       // Bind parameters to the SQL statement
-//       $statement->bindValue(':housestyle', $houseStyle);
-//       $statement->bindValue(':price', $price);
-//       $statement->bindValue(':name', $name);
-//       $statement->bindValue(':Address', $Address);
-//       $statement->bindValue(':title', $title);
-//       $statement->bindValue(':bath', $bath);
-//       $statement->bindValue(':bed', $bed);
-//       $statement->bindValue(':sqft', $sqft);
-//       $statement->bindValue(':State', $State);
-//       $statement->bindValue(':Locality', $Locality);
-//       $statement->bindValue(':status', $status);
-  
-//       // Execute the stored procedure
-//       $statement->execute();
-  
-//       $statement->closeCursor();  // Close the cursor to free connection resources
-//       $db->commit(); 
-//    } catch (PDOException $e) {
-//       $e->getMessage();   // consider a generic message
-//       echo "$e";
-//    } catch (Exception $e) {
-//       $e->getMessage();   // consider a generic message
-//       echo "$e";
-//    }
-// }
 function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
    $db->beginTransaction();  // Start the transaction
 
    try {
-       echo "Preparing to execute stored procedure...";
-       $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
-       $statement = $db->prepare($query);
+      echo "Preparing to execute stored procedure...";
+      $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $statement = $db->prepare($query);
 
-       // Bind parameters
-       $statement->bindValue(':housestyle', $houseStyle);
-       $statement->bindValue(':price', $price);
-       $statement->bindValue(':name', $name);
-       $statement->bindValue(':Address', $Address);
-       $statement->bindValue(':title', $title);
-       $statement->bindValue(':bath', $bath);
-       $statement->bindValue(':bed', $bed);
-       $statement->bindValue(':sqft', $sqft);
-       $statement->bindValue(':State', $State);
-       $statement->bindValue(':Locality', $Locality);
-       $statement->bindValue(':status', $status);
+      // Bind parameters
+      $statement->bindValue(':housestyle', $houseStyle);
+      $statement->bindValue(':price', $price);
+      $statement->bindValue(':name', $name);
+      $statement->bindValue(':Address', $Address);
+      $statement->bindValue(':title', $title);
+      $statement->bindValue(':bath', $bath);
+      $statement->bindValue(':bed', $bed);
+      $statement->bindValue(':sqft', $sqft);
+      $statement->bindValue(':State', $State);
+      $statement->bindValue(':Locality', $Locality);
+      $statement->bindValue(':status', $status);
 
-      
-       $statement->execute();
-       echo "Stored procedure executed.";
-       $db->commit();  // Commit the transaction
-       $statement->closeCursor();  // Close the cursor to free connection resources
+
+      $statement->execute();
+      echo "Stored procedure executed.";
+      $db->commit();  // Commit the transaction
+      $statement->closeCursor();  // Close the cursor to free connection resources
    } catch (PDOException $e) {
-       $db->rollBack(); // Roll back the transaction on error
-       echo "PDOException: " . $e->getMessage();
+      $db->rollBack(); // Roll back the transaction on error
+      echo "PDOException: " . $e->getMessage();
    } catch (Exception $e) {
-       echo "Exception: " . $e->getMessage();
+      echo "Exception: " . $e->getMessage();
    }
 }
 
@@ -117,9 +60,12 @@ function signupAdmin($fname, $lname, $username, $password) {
 
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
-      $_SESSION["username"] = $username;
-      $_SESSION["type"] = "admin";
-      header("Location: viewProperty.php");
+      echo "<script>
+      localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
+      localStorage.setItem('type', 'Admin');
+      window.location.href = 'profile.php';
+    </script>";
+      exit();
    } catch (PDOException $e) {
       $e->getMessage();   // consider a generic message
       echo "$e";
@@ -158,9 +104,11 @@ function signupNormal($fname, $lname, $username, $password) {
 
       $statementUser->closeCursor();
       $statementNormalUser->closeCursor();
-      $_SESSION["username"] = $username;
-      $_SESSION["type"] = "customer";
-      header("Location: viewProperty.php");
+      echo "<script>
+      localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
+      localStorage.setItem('type', 'Customer');
+      window.location.href = 'profile.php';
+    </script>";
       exit();
    } catch (PDOException $e) {
       $e->getMessage();   // consider a generic message
@@ -187,11 +135,12 @@ function Adminlogin($username, $password) {
       $statement->closeCursor();
       if (!empty($res)) {
          if (password_verify($password, $res[0]["pword"])) {
-            // Password was correct, save their information to the
-            // session and send them to the question page
-            $_SESSION["username"] = $username;
-            $_SESSION["type"] ="Admin";
-            header("Location: profile.php");
+            // Instead of setting session variables, we output JavaScript.
+            echo "<script>
+                    localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
+                    localStorage.setItem('type', 'Admin');
+                    window.location.href = 'profile.php';
+                  </script>";
             exit();
          } else {
             header("Location: adminLogin.php?error=invalid_credentials");
@@ -200,12 +149,12 @@ function Adminlogin($username, $password) {
       }
    }
 }
-function logout(){
+function logout() {
    echo "<script>
    localstorage.clear();
  </script>";
- header("Location: landingPage.php");
-exit();
+   header("Location: landingPage.php");
+   exit();
 }
 function custLogin($username, $password) {
    global $db;
@@ -241,6 +190,17 @@ function getAllProperties() {
    $statement->execute();
    $result = $statement->fetchAll();     // fetch()
    $statement->closeCursor();
+   return $result;
+}
+
+function getPropertyById($id) {
+   global $db;
+   $query = "SELECT * FROM Property where pid=:id";
+   $statement = $db->prepare($query);    // compile
+   $statement->bindValue(':id', $id);
+   $statement->execute();
+   $result = $statement->fetchAll();     // fetch()
+   $statement->closeCursor();
    foreach ($result as $key => $property) {
       $pid = $property["pid"];
       $featuresquery = "SELECT * FROM Features WHERE pid=:pid";
@@ -262,14 +222,26 @@ function getAllProperties() {
    return $result;
 }
 
-function getRequestById($id) {
+function deletePropertyById($id) {
    global $db;
-   $query = "select * from requests where reqId=:reqId";
-   $statement = $db->prepare($query);    // compile
-   $statement->bindValue(':reqId', $id);
-   $statement->execute();
-   $result = $statement->fetch();
-   $statement->closeCursor();
+   $db->beginTransaction();  // Start the transaction
 
-   return $result;
+   try {
+      echo "Calling delete";
+      $query = "CALL DeleteProperty(:input_pid)";
+      $statement = $db->prepare($query);
+
+      $statement->bindValue(':input_pid', intval($id));
+      $statement->execute();
+      echo "delete executed";
+      $db->commit();
+      $statement->closeCursor();
+      header("Location: viewProperty.php");
+      exit();
+   } catch (PDOException $e) {
+      $db->rollBack(); // Roll back the transaction on error
+      echo "PDOException: " . $e->getMessage();
+   } catch (Exception $e) {
+      echo "Exception: " . $e->getMessage();
+   }
 }
