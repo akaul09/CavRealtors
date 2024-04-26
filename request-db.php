@@ -146,7 +146,11 @@ function Adminlogin($username, $password) {
    }
 }
 function logout(){
-
+   echo "<script>
+   localstorage.clear();
+ </script>";
+ header("Location: landingPage.php");
+exit();
 }
 function custLogin($username, $password) {
    global $db;
