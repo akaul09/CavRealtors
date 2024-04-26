@@ -10,6 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     $pidToDelete = $_POST['pid'];
     deletePropertyById($pidToDelete);
 }
+
+// if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['update'])){
+//     $pidToUpdate = $_POST['pid'];
+//     $name=  $property["name"];
+//     temp($pidToUpdate,$name);
+// }
+
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         var type = localStorage.getItem("type");
         if (type === "Admin") {
             document.getElementById("delete").style.display = 'block';
+            document.getElementById("update").style.display = 'block';
         } else {
             document.getElementById("delete").style.display = 'none';
-        }
+            document.getElementById("update").style.display = 'none';
+ }
     });
 </script>
 
@@ -51,6 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         <form method="POST" action="">
             <input type="hidden" name="pid" value="<?php echo $property['pid']; ?>">
             <button type="submit" name="delete" id="delete" style="display: none;">Delete</button>
+
+        </form>
+        <form method="POST" action="">
+            <input type="hidden" name="property" value="<?php echo $property ?>">
+            <button type="submit" name="update" id="update" style="display: none;">Update</button>
 
         </form>
     <?php endforeach; ?>

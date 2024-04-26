@@ -245,3 +245,42 @@ function deletePropertyById($id) {
       echo "Exception: " . $e->getMessage();
    }
 }
+function temp($p,$n){
+   echo $p;
+   echo $n;
+}
+function UpdatePropertyById($pid,$houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+   global $db;
+   $db->beginTransaction();  // Start the transaction
+
+   try {
+      echo "Preparing to execute stored procedure...";
+      $query = "CALL UpdateProperty(:pid,:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $statement = $db->prepare($query);
+
+      // Bind parameters
+      $statement->bindValue(':pid', $pid);
+      $statement->bindValue(':housestyle', $houseStyle);
+      $statement->bindValue(':price', $price);
+      $statement->bindValue(':name', $name);
+      $statement->bindValue(':Address', $Address);
+      $statement->bindValue(':title', $title);
+      $statement->bindValue(':bath', $bath);
+      $statement->bindValue(':bed', $bed);
+      $statement->bindValue(':sqft', $sqft);
+      $statement->bindValue(':State', $State);
+      $statement->bindValue(':Locality', $Locality);
+      $statement->bindValue(':status', $status);
+
+
+      $statement->execute();
+      echo "Stored procedure executed.";
+      $db->commit();  // Commit the transaction
+      $statement->closeCursor();  // Close the cursor to free connection resources
+   } catch (PDOException $e) {
+      $db->rollBack(); // Roll back the transaction on error
+      echo "PDOException: " . $e->getMessage();
+   } catch (Exception $e) {
+      echo "Exception: " . $e->getMessage();
+   }
+}
