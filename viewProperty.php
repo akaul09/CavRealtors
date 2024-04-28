@@ -18,17 +18,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <title>Real Estate Listings</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body { padding-top: 20px; }
-        .card { margin-bottom: 20px; }
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+        }
+        .footer a {
+            margin: 0 10px;
+        }
+        .full-height-image {
+            background-image: url('assets/homeImage.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px; 
+        }
+        .logout-button {
+        background-color: #dc3545; 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+        background-color: #c82333; 
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="text-center">
-        <h1>CavRealtors</h1>
-        <h2>Real Estate Listings</h2>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="landingPage.php">
+            <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav">
+                <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+                <form method="post" action="profile.php">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
+        </div>
     </div>
-    
+</nav>
+
+
+<div class="container">    
     <div class="row mb-3">
         <div class="col-md-8">
             <input class="form-control" type="search" placeholder="Search properties">

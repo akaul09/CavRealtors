@@ -5,7 +5,7 @@ require("request-db.php");
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['housestyle'])) {
-        addProperty($_POST["housestyle"], $_POST["price"],$_POST["name"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squarefeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
+        addProperty($_POST["housestyle"], $_POST["price"],$_POST["address"], $_POST["brokerName"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squareFeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
 
 }
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br><br>
                 <div class="mb-3">
                     <label for="bathrooms" class="form-label">No. of Bathrooms</label>
-                    <input type="number" class="form-control" id="bathrooms" name="bathrooms" required>
+                    <input type="float" class="form-control" id="bathrooms" name="bathrooms" required>
                     <div class="invalid-feedback">
                         Please provide the number of bathrooms.
                     </div>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br><br>
                 <div class="mb-3">
                     <label for="county" class="form-label">County</label>
-                    <input type="text" class="form-control" id="county" id="county" required>
+                    <input type="text" class="form-control" id="county" name="county" required>
                     <div class="invalid-feedback">
                         Please provide the county.
                     </div>
@@ -113,6 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="sold">Sold</option>
                         <option value="pending">Pending</option>
                         <option value="not_available">Not Available</option>
+                        <option value="sale">sale</option>
+                        <option value="Contigent">Contigent</option>
+                        <option value="Foreclosure">Foreclosure</option>
+                        <option value="Coming soon">Coming soon</option>
+
                     </select>
                     <div class="invalid-feedback">
                         Please select the status of the house.

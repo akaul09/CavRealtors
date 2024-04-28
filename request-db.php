@@ -1,21 +1,20 @@
 <?php
 
 
-function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+function addProperty($houseStyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
    $db->beginTransaction();  
 
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL AddProperty(:housestyle, :price, :Address, :brokerName, :bath, :bed, :sqft, :State, :Locality, :status)";
       $statement = $db->prepare($query);
 
       // Bind parameters
       $statement->bindValue(':housestyle', $houseStyle);
       $statement->bindValue(':price', $price);
-      $statement->bindValue(':name', $name);
       $statement->bindValue(':Address', $Address);
-      $statement->bindValue(':title', $title);
+      $statement->bindValue(':brokerName', $title);
       $statement->bindValue(':bath', $bath);
       $statement->bindValue(':bed', $bed);
       $statement->bindValue(':sqft', $sqft);
@@ -241,6 +240,52 @@ function getPropertyById($id) {
          $result[$key]["bath"] = "Bath info not found";
          $result[$key]["sqft"] = "Sqft info not found";
       }
+      $brokerquery = "SELECT * FROM Broker WHERE pid=:pid";
+      $statement3 = $db->prepare($brokerquery);
+      $statement3->bindValue(':pid', $pid);
+      $statement3->execute();
+      $broker = $statement3->fetchAll();
+      $statement3->closeCursor();
+      if(!empty($broker)){
+         $result[$key]["title"] = $broker[0]["title"];
+      }
+      else{
+         if(!empty($broker)){
+            $result[$key]["title"] = "Broker info not found";
+         }
+      }
+      $typequery = "SELECT * FROM Type WHERE pid=:pid";
+      $statement4 = $db->prepare($typequery);
+      $statement4->bindValue(':pid', $pid);
+      $statement4->execute();
+      $Type = $statement4->fetchAll();
+      $statement4->closeCursor();
+      if(!empty($Type)){
+         $result[$key]["status"] = $Type[0]["status"];
+         $result[$key]["housestyle"] = $Type[0]["housestyle"];
+      }
+      else{
+         if(!empty($Type)){
+            $result[$key]["status"] = "Status info not found";
+            $result[$key]["housestyle"] = "Housestyle info not found";
+         }
+      }
+      $locationquery = "SELECT * FROM Location WHERE pid=:pid";
+      $statement5 = $db->prepare($locationquery);
+      $statement5->bindValue(':pid', $pid);
+      $statement5->execute();
+      $location = $statement5->fetchAll();
+      $statement5->closeCursor();
+      if(!empty($location)){
+         $result[$key]["locality"] = $location[0]["Locality"];
+         $result[$key]["state"] = $location[0]["State"];
+      }
+      else{
+         if(!empty($location)){
+            $result[$key]["locality"] = "Locality info not found";
+            $result[$key]["state"] = "State info not found";
+         }
+      }
    }
    return $result;
 }
@@ -272,36 +317,35 @@ function temp($p,$n){
    echo $p;
    echo $n;
 }
-function UpdatePropertyById($pid,$houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqft, $Address, $Locality,$State, $price) {
    global $db;
-   $db->beginTransaction();  // Start the transaction
-
+   $db->beginTransaction();  
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL UpdateProperty(:pid,:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL UpdateProcedure(:input_pid,:newHouseStyle, :newStatus, :newBrokerName, :newBathrooms, :newBedrooms, :newSQFT, :newAddress, :newLocality, :newState, :newPrice)";
       $statement = $db->prepare($query);
 
-      // Bind parameters
-      $statement->bindValue(':pid', $pid);
-      $statement->bindValue(':housestyle', $houseStyle);
-      $statement->bindValue(':price', $price);
-      $statement->bindValue(':name', $name);
-      $statement->bindValue(':Address', $Address);
-      $statement->bindValue(':title', $title);
-      $statement->bindValue(':bath', $bath);
-      $statement->bindValue(':bed', $bed);
-      $statement->bindValue(':sqft', $sqft);
-      $statement->bindValue(':State', $State);
-      $statement->bindValue(':Locality', $Locality);
-      $statement->bindValue(':status', $status);
+      $statement->bindValue(':input_pid', $pid);
+      $statement->bindValue(':newHouseStyle', $houseStyle);
+      $statement->bindValue(':newStatus', $status);
+      $statement->bindValue(':newBrokerName', $title);
+      $statement->bindValue(':newBathrooms', $bath);
+      $statement->bindValue(':newBedrooms', $bed);
+      $statement->bindValue(':newSQFT', $sqft);
+      $statement->bindValue(':newAddress', $Address);
+      $statement->bindValue(':newLocality', $Locality);
+      $statement->bindValue(':newState', $State);
+      $statement->bindValue(':newPrice', $price);
 
 
       $statement->execute();
       echo "Stored procedure executed.";
-      $db->commit();  // Commit the transaction
-      $statement->closeCursor();  // Close the cursor to free connection resources
+      echo $price;
+      $db->commit();  
+      $statement->closeCursor();
+      // header("Location: viewProperty.php");
    } catch (PDOException $e) {
-      $db->rollBack(); // Roll back the transaction on error
+      $db->rollBack();
       echo "PDOException: " . $e->getMessage();
    } catch (Exception $e) {
       echo "Exception: " . $e->getMessage();
