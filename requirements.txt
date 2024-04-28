@@ -1,2 +1,3 @@
 - show specific added properties for each broker
 - ensure all promised functionalities are covered
+- add if statement at the top to display the pages only if logged in

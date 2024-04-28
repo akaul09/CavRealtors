@@ -337,10 +337,10 @@ function UpdatePropertyById($pid, $houseStyle, $status, $title, $bath, $bed, $sq
 
       $statement->execute();
       echo "Stored procedure executed.";
-      echo $price;
-      $db->commit();
+      // echo $price;
+      $db->commit(); 
       $statement->closeCursor();
-      // header("Location: viewProperty.php");
+      header("Location: viewProperty.php");
    } catch (PDOException $e) {
       $db->rollBack();
       echo "PDOException: " . $e->getMessage();

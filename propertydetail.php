@@ -34,7 +34,10 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        UpdatePropertyById(intval($_POST['pid']), $details[0]['housestyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['address'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
+        echo "pid: " . intval($details[0]['pid']) . "\n";
+        echo "title: " . $details[0]['title'] . "\n";
+        echo "address: " . $details[0]['name'] . "\n";
+        UpdatePropertyById(intval($details[0]['pid']), $details[0]['housestyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['name'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
@@ -72,7 +75,7 @@
                 </div>
                 <form method="POST" action="">
                     <div class="modal-body">
-                        <input type="hidden" id="modalPid" name="pid" value="<?php $details[0]["pid"] ?>">
+                        <input type="hidden" id="modalPid" name="pid" value=<?php $details[0]["pid"] ?>>
                         <div class="form-group">
                             <label for="modalPrice">Price:</label>
                             <input type="text" class="form-control" id="modalPrice" name="price" value="<?php echo $details[0]["price"]; ?>" required>
