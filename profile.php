@@ -35,6 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-position: center;
             min-height: 400px; /* Adjust this value based on your needs */
         }
+        .logout-button {
+        background-color: #dc3545; 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+        background-color: #c82333; 
+        }
     </style>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

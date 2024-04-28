@@ -83,6 +83,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
                 <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
                 <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
                 <form method="post" action="profile.php">
@@ -105,6 +106,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
                 <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
                 <form method="post" action="profile.php">
                     <button type="submit" class="logout-button">Logout</button>
