@@ -342,6 +342,8 @@ function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqf
       echo "Stored procedure executed.";
       $db->commit();  // Commit the transaction
       $statement->closeCursor();  // Close the cursor to free connection resources
+      // header("Location: viewProperty.php");
+      echo "execute was successful";
    } catch (PDOException $e) {
       $db->rollBack(); // Roll back the transaction on error
       echo "PDOException: " . $e->getMessage();

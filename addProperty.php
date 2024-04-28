@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br><br>
                 <div class="mb-3">
                     <label for="bathrooms" class="form-label">No. of Bathrooms</label>
-                    <input type="number" class="form-control" id="bathrooms" name="bathrooms" required>
+                    <input type="float" class="form-control" id="bathrooms" name="bathrooms" required>
                     <div class="invalid-feedback">
                         Please provide the number of bathrooms.
                     </div>
@@ -113,6 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="sold">Sold</option>
                         <option value="pending">Pending</option>
                         <option value="not_available">Not Available</option>
+                        <option value="sale">sale</option>
+                        <option value="Contigent">Contigent</option>
+                        <option value="Foreclosure">Foreclosure</option>
+                        <option value="Coming soon">Coming soon</option>
+
                     </select>
                     <div class="invalid-feedback">
                         Please select the status of the house.

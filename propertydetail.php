@@ -34,7 +34,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        UpdatePropertyById(intval($_POST['pid']), $details[0]['houseStyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['address'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
+        UpdatePropertyById(intval($_POST['pid']), $details[0]['housestyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['address'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
@@ -87,16 +87,19 @@
                         </div>
                         <div class="form-group">
                             <label for="modalBaths">Bathrooms:</label>
-                            <input type="number" class="form-control" id="modalBaths" name="bath" value="<?php echo $details[0]["bath"]; ?>" required>
+                            <input type="float" class="form-control" id="modalBaths" name="bath" value="<?php echo $details[0]["bath"]; ?>" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
+                        <div class="form-group">
+                            <label for="status" class="form-label">Status: </label>
                             <select class="form-select" id="status" name="status" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option value="for_sale">For Sale</option>
-                                <option value="sold">Sold</option>
-                                <option value="pending">Pending</option>
-                                <option value="not_available">Not Available</option>
+                                <option disabled>Choose...</option>
+                                <option value="for_sale" <?php echo ($details[0]["status"] == 'for_sale') ? 'selected' : ''; ?>>For Sale</option>
+                                <option value="sold" <?php echo ($details[0]["status"] == 'sold') ? 'selected' : ''; ?>>Sold</option>
+                                <option value="pending" <?php echo ($details[0]["status"] == 'pending') ? 'selected' : ''; ?>>Pending</option>
+                                <option value="Coming Soon" <?php echo ($details[0]["status"] == 'Coming Soon') ? 'selected' : ''; ?>>Coming Soon</option>
+                                <option value="Contigent" <?php echo ($details[0]["status"] == 'Contigent') ? 'selected' : ''; ?>>Contigent</option>
+                                <option value="Foreclosure" <?php echo ($details[0]["status"] == 'Foreclosure') ? 'selected' : ''; ?>>Foreclosure</option>
+                                <option value="sale" <?php echo ($details[0]["status"] == 'sale') ? 'selected' : ''; ?>>Sale</option>
                             </select>
                         </div>
                     </div>
