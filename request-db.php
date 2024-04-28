@@ -427,3 +427,12 @@ function exportJson() {
     echo $json;
     exit();
 }
+
+function sortPrices(){
+   global $db;
+   $query = "SELECT * FROM Property ORDER BY price ASC";
+   $statement = $db->prepare($query);    // compile
+   $statement->execute();
+   $result = $statement->fetchAll();     // fetch()
+   $statement->closeCursor();
+}
