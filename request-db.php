@@ -322,28 +322,30 @@ function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqf
    $db->beginTransaction();  
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL UpdateProcedure(:pid,:housestyle, :status, :title, :bath, :bed, :sqft, :Address, :Locality, :State, :price)";
+      $query = "CALL UpdateProcedure(:input_pid,:newHouseStyle, :newStatus, :newBrokerName, :newBathrooms, :newBedrooms, :newSQFT, :newAddress, :newLocality, :newState, :newPrice)";
       $statement = $db->prepare($query);
 
-      $statement->bindValue(':pid', $pid);
-      $statement->bindValue(':housestyle', $houseStyle);
-      $statement->bindValue(':status', $status);
-      $statement->bindValue(':title', $title);
-      $statement->bindValue(':bath', $bath);
-      $statement->bindValue(':bed', $bed);
-      $statement->bindValue(':sqft', $sqft);
-      $statement->bindValue(':Address', $Address);
-      $statement->bindValue(':Locality', $Locality);
-      $statement->bindValue(':State', $State);
-      $statement->bindValue(':price', $price);
+      $statement->bindValue(':input_pid', $pid);
+      $statement->bindValue(':newHouseStyle', $houseStyle);
+      $statement->bindValue(':newStatus', $status);
+      $statement->bindValue(':newBrokerName', $title);
+      $statement->bindValue(':newBathrooms', $bath);
+      $statement->bindValue(':newBedrooms', $bed);
+      $statement->bindValue(':newSQFT', $sqft);
+      $statement->bindValue(':newAddress', $Address);
+      $statement->bindValue(':newLocality', $Locality);
+      $statement->bindValue(':newState', $State);
+      $statement->bindValue(':newPrice', $price);
 
 
       $statement->execute();
       echo "Stored procedure executed.";
-      $db->commit();  // Commit the transaction
-      $statement->closeCursor();  // Close the cursor to free connection resources
+      echo $price;
+      $db->commit();  
+      $statement->closeCursor();
+      // header("Location: viewProperty.php");
    } catch (PDOException $e) {
-      $db->rollBack(); // Roll back the transaction on error
+      $db->rollBack();
       echo "PDOException: " . $e->getMessage();
    } catch (Exception $e) {
       echo "Exception: " . $e->getMessage();
