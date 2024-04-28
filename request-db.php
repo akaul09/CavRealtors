@@ -1,71 +1,15 @@
 <?php
-// function addProperty($housestyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status)
-// {
-//    global $db;
 
-//    try {
-//       // $statement = $db->query($query);   // compile & exe
 
-//       // prepared statement
-//       // pre-compile
-//       // $query = "CALL AddProperty(housestyle, status, title, bath, bed, sqft, Address, Locality, State)";
-
-//       // $statement = $db->prepare($query);
-//       // // fill in the value
-//       // $statement->bindValue(':housestyle', $housestyle);
-//       // $statement->bindValue(':price', $price);
-
-//       // $statement->bindValue(':title', $title);
-//       // $statement->bindValue(':Address', $Address);
-//       // $statement->bindValue(':title', $title);
-//       // $statement->bindValue(':bath', $bath);
-//       // $statement->bindValue(':bed', $bed);
-//       // $statement->bindValue(':sqft', $sqft);
-//       // $statement->bindValue(':State', $State);
-//       // $statement->bindValue(':Locality', $Locality);
-//       // $statement->bindValue(':status', $status);
-//       // // exe
-//       // $statement->execute();
-//       // $statement->closeCursor();
-//       $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
-//       $statement = $db->prepare($query);
-  
-//       // Bind parameters to the SQL statement
-//       $statement->bindValue(':housestyle', $houseStyle);
-//       $statement->bindValue(':price', $price);
-//       $statement->bindValue(':name', $name);
-//       $statement->bindValue(':Address', $Address);
-//       $statement->bindValue(':title', $title);
-//       $statement->bindValue(':bath', $bath);
-//       $statement->bindValue(':bed', $bed);
-//       $statement->bindValue(':sqft', $sqft);
-//       $statement->bindValue(':State', $State);
-//       $statement->bindValue(':Locality', $Locality);
-//       $statement->bindValue(':status', $status);
-  
-//       // Execute the stored procedure
-//       $statement->execute();
-  
-//       $statement->closeCursor();  // Close the cursor to free connection resources
-//       $db->commit(); 
-//    } catch (PDOException $e) {
-//       $e->getMessage();   // consider a generic message
-//       echo "$e";
-//    } catch (Exception $e) {
-//       $e->getMessage();   // consider a generic message
-//       echo "$e";
-//    }
-// }
 function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
-   $db->beginTransaction();  // Start the transaction
+   $db->beginTransaction();  
 
    try {
        echo "Preparing to execute stored procedure...";
        $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
        $statement = $db->prepare($query);
 
-       // Bind parameters
        $statement->bindValue(':housestyle', $houseStyle);
        $statement->bindValue(':price', $price);
        $statement->bindValue(':name', $name);
@@ -81,10 +25,10 @@ function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, 
       
        $statement->execute();
        echo "Stored procedure executed.";
-       $db->commit();  // Commit the transaction
-       $statement->closeCursor();  // Close the cursor to free connection resources
+       $db->commit();  
+       $statement->closeCursor(); 
    } catch (PDOException $e) {
-       $db->rollBack(); // Roll back the transaction on error
+       $db->rollBack(); 
        echo "PDOException: " . $e->getMessage();
    } catch (Exception $e) {
        echo "Exception: " . $e->getMessage();
@@ -226,38 +170,42 @@ function custLogin($username, $password) {
       }
    }
 }
-function getAllProperties() {
+function getAllProperties($page = 1, $propertiesPerPage = 10) {
    global $db;
-   $query = "select * from Property";
-   $statement = $db->prepare($query);    // compile
+   $startFrom = ($page - 1) * $propertiesPerPage;
+   
+   $query = "SELECT * FROM Property LIMIT :startFrom, :propertiesPerPage";
+   $statement = $db->prepare($query);
+   $statement->bindValue(':startFrom', $startFrom, PDO::PARAM_INT);
+   $statement->bindValue(':propertiesPerPage', $propertiesPerPage, PDO::PARAM_INT);
    $statement->execute();
-   $result = $statement->fetchAll();     // fetch()
+   $properties = $statement->fetchAll();
    $statement->closeCursor();
-   foreach ($result as $key => $property) {
-      $pid = $property["pid"];
-      $featuresquery = "SELECT * FROM Features WHERE pid=:pid";
-      $statement2 = $db->prepare($featuresquery);
-      $statement2->bindValue(':pid', $pid);
-      $statement2->execute();
-      $features = $statement2->fetchAll();
-      $statement2->closeCursor();
-      if (!empty($features)) {
-         $result[$key]["bed"] = $features[0]["bed"];
-         $result[$key]["bath"] = $features[0]["bath"];
-         $result[$key]["sqft"] = $features[0]["sqft"];
-      } else {
-         $result[$key]["bed"] = "Bed info not found";
-         $result[$key]["bath"] = "Bath info not found";
-         $result[$key]["sqft"] = "Sqft info not found";
-      }
-   }
-   return $result;
-}
 
+   foreach ($properties as $key => $property) {
+       $pid = $property["pid"];
+       $featuresQuery = "SELECT * FROM Features WHERE pid=:pid";
+       $featuresStmt = $db->prepare($featuresQuery);
+       $featuresStmt->bindValue(':pid', $pid);
+       $featuresStmt->execute();
+       $features = $featuresStmt->fetchAll();
+       $featuresStmt->closeCursor();
+       if (!empty($features)) {
+           $properties[$key]["bed"] = $features[0]["bed"];
+           $properties[$key]["bath"] = $features[0]["bath"];
+           $properties[$key]["sqft"] = $features[0]["sqft"];
+       } else {
+           $properties[$key]["bed"] = "Bed info not found";
+           $properties[$key]["bath"] = "Bath info not found";
+           $properties[$key]["sqft"] = "Sqft info not found";
+       }
+   }
+   return $properties;
+}
 function getRequestById($id) {
    global $db;
    $query = "select * from requests where reqId=:reqId";
-   $statement = $db->prepare($query);    // compile
+   $statement = $db->prepare($query);    
    $statement->bindValue(':reqId', $id);
    $statement->execute();
    $result = $statement->fetch();
@@ -265,3 +213,4 @@ function getRequestById($id) {
 
    return $result;
 }
+
