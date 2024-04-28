@@ -25,8 +25,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/js/bootstrap.bundle.min.js" integrity="sha256-gOQJIa9+K/" crossorigin="anonymous"></script>
     <title>Admin Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="landing.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+        }
+        .footer a {
+            margin: 0 10px;
+        }
+        .full-height-image {
+            background-image: url('assets/homeImage.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px; /* Adjust this value based on your needs */
+        }
+    </style>
 </head>
 </body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="landingPage.php">
+        <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="navbar-nav ml-auto">
+            <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+        </div>
+        <a href="signup.php" class="btn btn-bordered" role="button">Sign Up</a>
+        <a class="btn btn-bordered" href="adminLogin.php">Admin Login</a>
+        <a class="btn btn-bordered" href="custLogin.php">Customer Login</a>
+    </div>
+</nav>
 <div class="form">
     <form method="post" action="adminLogin.php">
         <h1>Admin Login</h1>

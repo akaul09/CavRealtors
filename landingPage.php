@@ -46,7 +46,9 @@
         <div class="navbar-nav ml-auto">
             <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
         </div>
-        <a href="signup.php" class="btn btn-bordered" role="button">Sign In</a>
+        <a href="signup.php" class="btn btn-bordered" role="button">Sign Up</a>
+        <a class="btn btn-bordered" href="adminLogin.php">Admin Login</a>
+        <a class="btn btn-bordered" href="custLogin.php">Customer Login</a>
     </div>
 </nav>
 
