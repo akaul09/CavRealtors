@@ -1,5 +1,7 @@
 - show specific added properties for each broker
 - update property
-- dyanmic frontend behavior (ask if pagination counts)
 - add db security -- by assigning each other roles
 - export properties as JSON from the db
+- make sure navigation etc works like it should (take anushka's help)
+- ensure all promised functionalities are covered
+- 10 tables??
