@@ -1,7 +1,5 @@
 - show specific added properties for each broker
 - update property
-- add db security -- by assigning each other roles
 - export properties as JSON from the db
-- make sure navigation etc works like it should (take anushka's help)
 - ensure all promised functionalities are covered
-- 10 tables??
+- add if statement at the top to display the pages only if logged in
