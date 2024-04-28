@@ -1,6 +1,5 @@
-- Use all tables in some way
-- implement database security -- can be done by some constraint or role based access control
-- have some personalized data for each returning user
-- retrieve/add/update/delete from the table
-- Do search/sort for properties
-- do export properties as json
+- show specific added properties for each broker
+- update property
+- dyanmic frontend behavior (ask if pagination counts)
+- add db security -- by assigning each other roles
+- export properties as JSON from the db

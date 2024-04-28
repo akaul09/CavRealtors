@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     </div>
     
     <?php foreach ($properties as $property): ?>
-    <div class="card">
+    <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" class="card" style="text-decoration: none; color: inherit;">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8">
