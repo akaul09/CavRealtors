@@ -1,8 +1,7 @@
-- Use all tables in some way
-- implement database security -- can be done by some constraint or role based access control
-- have some personalized data for each returning user (Param)
-- Add property (Rachit)
-- Delete property for only the properties that the admin added (Rachit)
-- retrieve/add/update/delete from the table
-- Do search/sort for properties (Pravesh)
-- do export properties as json (Param)
+- show specific added properties for each broker
+- update property
+- add db security -- by assigning each other roles
+- export properties as JSON from the db
+- make sure navigation etc works like it should (take anushka's help)
+- ensure all promised functionalities are covered
+- 10 tables??
