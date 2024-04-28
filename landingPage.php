@@ -43,9 +43,6 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
-        <div class="navbar-nav ml-auto">
-            <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
-        </div>
         <a href="signup.php" class="btn btn-bordered" role="button">Sign Up</a>
         <a class="btn btn-bordered" href="adminLogin.php">Admin Login</a>
         <a class="btn btn-bordered" href="custLogin.php">Customer Login</a>
@@ -57,7 +54,6 @@
         <div class="col-12 text-center">
             <h1>Explore Your Dream Home</h1>
             <p>Find properties in a snap.</p>
-            <a href="viewProperty.php" class="btn btn-primary">Start Your Search</a>
         </div>
     </div>
     <div class="row text-center my-4">

@@ -37,6 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             background-position: center;
             min-height: 400px; 
         }
+        .logout-button {
+        background-color: #dc3545; 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+        background-color: #c82333; 
+        }
     </style>
 </head>
 <body>
@@ -52,7 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav">
                 <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
-                <a href="signup.php" class="btn btn-bordered" role="button">Sign In</a>
+                <form method="post" action="profile.php">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
             </div>
         </div>
     </div>
