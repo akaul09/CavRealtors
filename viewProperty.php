@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Admin Navigation Bar -->
 <nav id="navbarAdmin" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
     <div class="container-fluid"> 
-        <a class="navbar-brand" href="landingPage.php">
+        <a class="navbar-brand" href="index.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- User Navigation Bar -->
 <nav id="navbarUser" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
     <div class="container-fluid"> 
-        <a class="navbar-brand" href="landingPage.php">
+        <a class="navbar-brand" href="index.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
