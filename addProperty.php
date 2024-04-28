@@ -5,7 +5,7 @@ require("request-db.php");
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['housestyle'])) {
-        addProperty($_POST["housestyle"], $_POST["price"],$_POST["name"],$_POST["address"], $_POST["brokername"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squareFeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
+        addProperty($_POST["housestyle"], $_POST["price"],$_POST["address"], $_POST["brokerName"], $_POST["bathrooms"], $_POST["bedrooms"], $_POST["squareFeet"], $_POST["state"], $_POST["county"], $_POST["status"]);
     }
 
 }

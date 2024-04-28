@@ -34,7 +34,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        UpdatePropertyById(intval($_POST['pid']), $_POST['houseStyle'], $_POST['status'], $_POST['name'], $_POST['address'], $_POST['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $_POST['state'], $_POST['locality'], intval($_POST['price']));
+        UpdatePropertyById(intval($_POST['pid']), $details[0]['houseStyle'], intval($_POST['price']), $details[0]['address'], $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['state'], $details[0]['locality'], $_POST['status']);
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
@@ -88,6 +88,10 @@
                         <div class="form-group">
                             <label for="modalBaths">Bathrooms:</label>
                             <input type="number" class="form-control" id="modalBaths" name="bath" value="<?php echo $details[0]["bath"];?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalStatus">Status:</label>
+                            <input type="text" class="form-control" id="modalStatus" name="status" value="<?php echo $details[0]["status"];?>" required>
                         </div>
                     </div>
                     <div class="modal-footer">

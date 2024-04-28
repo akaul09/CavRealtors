@@ -1,21 +1,20 @@
 <?php
 
 
-function addProperty($houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+function addProperty($houseStyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
    $db->beginTransaction();  
 
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL AddProperty(:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL AddProperty(:housestyle, :price, :Address, :brokerName, :bath, :bed, :sqft, :State, :Locality, :status)";
       $statement = $db->prepare($query);
 
       // Bind parameters
       $statement->bindValue(':housestyle', $houseStyle);
       $statement->bindValue(':price', $price);
-      $statement->bindValue(':name', $name);
       $statement->bindValue(':Address', $Address);
-      $statement->bindValue(':title', $title);
+      $statement->bindValue(':brokerName', $title);
       $statement->bindValue(':bath', $bath);
       $statement->bindValue(':bed', $bed);
       $statement->bindValue(':sqft', $sqft);
@@ -241,6 +240,52 @@ function getPropertyById($id) {
          $result[$key]["bath"] = "Bath info not found";
          $result[$key]["sqft"] = "Sqft info not found";
       }
+      $brokerquery = "SELECT * FROM Broker WHERE pid=:pid";
+      $statement3 = $db->prepare($brokerquery);
+      $statement3->bindValue(':pid', $pid);
+      $statement3->execute();
+      $broker = $statement3->fetchAll();
+      $statement3->closeCursor();
+      if(!empty($broker)){
+         $result[$key]["title"] = $broker[0]["title"];
+      }
+      else{
+         if(!empty($broker)){
+            $result[$key]["title"] = "Broker info not found";
+         }
+      }
+      $typequery = "SELECT * FROM Type WHERE pid=:pid";
+      $statement4 = $db->prepare($typequery);
+      $statement4->bindValue(':pid', $pid);
+      $statement4->execute();
+      $Type = $statement4->fetchAll();
+      $statement4->closeCursor();
+      if(!empty($Type)){
+         $result[$key]["status"] = $Type[0]["status"];
+         $result[$key]["housestyle"] = $Type[0]["housestyle"];
+      }
+      else{
+         if(!empty($Type)){
+            $result[$key]["status"] = "Status info not found";
+            $result[$key]["housestyle"] = "Housestyle info not found";
+         }
+      }
+      $locationquery = "SELECT * FROM Location WHERE pid=:pid";
+      $statement5 = $db->prepare($locationquery);
+      $statement5->bindValue(':pid', $pid);
+      $statement5->execute();
+      $Type = $statement5->fetchAll();
+      $statement5->closeCursor();
+      if(!empty($Type)){
+         $result[$key]["Locality"] = $Type[0]["status"];
+         $result[$key]["housestyle"] = $Type[0]["housestyle"];
+      }
+      else{
+         if(!empty($Type)){
+            $result[$key]["status"] = "Status info not found";
+            $result[$key]["housestyle"] = "Housestyle info not found";
+         }
+      }
    }
    return $result;
 }
@@ -272,18 +317,17 @@ function temp($p,$n){
    echo $p;
    echo $n;
 }
-function UpdatePropertyById($pid,$houseStyle, $status, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $price) {
+function UpdatePropertyById($pid,$houseStyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
    $db->beginTransaction();  
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL UpdateProcedure(:pid,:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL UpdateProcedure(:pid,:housestyle, :price, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
       $statement = $db->prepare($query);
 
       $statement->bindValue(':pid', $pid);
       $statement->bindValue(':housestyle', $houseStyle);
       $statement->bindValue(':price', $price);
-      $statement->bindValue(':name', $name);
       $statement->bindValue(':Address', $Address);
       $statement->bindValue(':title', $title);
       $statement->bindValue(':bath', $bath);
