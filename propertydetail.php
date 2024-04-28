@@ -34,7 +34,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        UpdatePropertyById($_POST['pid'], $_POST['houseStyle'], $_POST['price'], $_POST['name'], $_POST['address'], $_POST['title'], $_POST['bath'], $_POST['bed'], $_POST['sqft'], $_POST['state'], $_POST['locality'], $_POST['status']);
+        UpdatePropertyById(intval($_POST['pid']), $_POST['houseStyle'], $_POST['status'], $_POST['name'], $_POST['address'], $_POST['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $_POST['state'], $_POST['locality'], intval($_POST['price']));
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
@@ -61,7 +61,6 @@
             </form>
         </div>
     <?php endforeach; ?>
-
     <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -73,22 +72,22 @@
                 </div>
                 <form method="POST" action="">
                     <div class="modal-body">
-                        <input type="hidden" id="modalPid" name="pid" value=<?php $details[0]["pid"]?>>
+                        <input type="hidden" id="modalPid" name="pid" value="<?php $details[0]["pid"]?>">
                         <div class="form-group">
                             <label for="modalPrice">Price:</label>
-                            <input type="text" class="form-control" id="modalPrice" name="price" value=<?php $details[0]["price"]?> required>
+                            <input type="text" class="form-control" id="modalPrice" name="price" value="<?php echo $details[0]["price"];?>" required>
                         </div>
                         <div class="form-group">
                             <label for="modalSqft">Square Feet:</label>
-                            <input type="text" class="form-control" id="modalSqft" name="sqft" value=<?php $details[0]["sqft"]?>required>
+                            <input type="text" class="form-control" id="modalSqft" name="sqft" value="<?php echo $details[0]["sqft"];?>" required>
                         </div>
                         <div class="form-group">
                             <label for="modalBeds">Beds:</label>
-                            <input type="number" class="form-control" id="modalBeds" name="bed" value=<?php $details[0]["bed"]?> required>
+                            <input type="number" class="form-control" id="modalBeds" name="bed" value="<?php echo $details[0]["bed"];?>" required>
                         </div>
                         <div class="form-group">
                             <label for="modalBaths">Bathrooms:</label>
-                            <input type="number" class="form-control" id="modalBaths" name="bath" value=<?php $details[0]["bath"]?> required>
+                            <input type="number" class="form-control" id="modalBaths" name="bath" value="<?php echo $details[0]["bath"];?>" required>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -272,7 +272,7 @@ function temp($p,$n){
    echo $p;
    echo $n;
 }
-function UpdatePropertyById($pid,$houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+function UpdatePropertyById($pid,$houseStyle, $status, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $price) {
    global $db;
    $db->beginTransaction();  
    try {
