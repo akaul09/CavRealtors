@@ -11,8 +11,8 @@
 - fix UI for signUp  done
 -- possibly look at search 
 
---UI for property detail 
--- UI for add property only if admin button in nav bar 
+--UI for property detail  
+-- UI for add property only if admin button in nav bar   done
 
 -- display profile button on Nav bar after logging in 
 
