@@ -3,7 +3,7 @@
 
 function addProperty($houseStyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
-   $db->beginTransaction();  
+   $db->beginTransaction();
 
    try {
       echo "Preparing to execute stored procedure...";
@@ -187,7 +187,7 @@ function custLogin($username, $password) {
 function getAllProperties($page = 1, $propertiesPerPage = 10) {
    global $db;
    $startFrom = ($page - 1) * $propertiesPerPage;
-   
+
    $query = "SELECT * FROM Property LIMIT :startFrom, :propertiesPerPage";
    $statement = $db->prepare($query);
    $statement->bindValue(':startFrom', $startFrom, PDO::PARAM_INT);
@@ -203,15 +203,15 @@ function getAllProperties($page = 1, $propertiesPerPage = 10) {
       $features = $featuresStmt->fetchAll();
       $featuresStmt->closeCursor();
       if (!empty($features)) {
-          $properties[$key]["bed"] = $features[0]["bed"];
-          $properties[$key]["bath"] = $features[0]["bath"];
-          $properties[$key]["sqft"] = $features[0]["sqft"];
+         $properties[$key]["bed"] = $features[0]["bed"];
+         $properties[$key]["bath"] = $features[0]["bath"];
+         $properties[$key]["sqft"] = $features[0]["sqft"];
       } else {
-          $properties[$key]["bed"] = "Bed info not found";
-          $properties[$key]["bath"] = "Bath info not found";
-          $properties[$key]["sqft"] = "Sqft info not found";
+         $properties[$key]["bed"] = "Bed info not found";
+         $properties[$key]["bath"] = "Bath info not found";
+         $properties[$key]["sqft"] = "Sqft info not found";
       }
-  }
+   }
    return $properties;
 }
 
@@ -246,11 +246,10 @@ function getPropertyById($id) {
       $statement3->execute();
       $broker = $statement3->fetchAll();
       $statement3->closeCursor();
-      if(!empty($broker)){
+      if (!empty($broker)) {
          $result[$key]["title"] = $broker[0]["title"];
-      }
-      else{
-         if(!empty($broker)){
+      } else {
+         if (!empty($broker)) {
             $result[$key]["title"] = "Broker info not found";
          }
       }
@@ -260,12 +259,11 @@ function getPropertyById($id) {
       $statement4->execute();
       $Type = $statement4->fetchAll();
       $statement4->closeCursor();
-      if(!empty($Type)){
+      if (!empty($Type)) {
          $result[$key]["status"] = $Type[0]["status"];
          $result[$key]["housestyle"] = $Type[0]["housestyle"];
-      }
-      else{
-         if(!empty($Type)){
+      } else {
+         if (!empty($Type)) {
             $result[$key]["status"] = "Status info not found";
             $result[$key]["housestyle"] = "Housestyle info not found";
          }
@@ -276,12 +274,11 @@ function getPropertyById($id) {
       $statement5->execute();
       $location = $statement5->fetchAll();
       $statement5->closeCursor();
-      if(!empty($location)){
+      if (!empty($location)) {
          $result[$key]["locality"] = $location[0]["Locality"];
          $result[$key]["state"] = $location[0]["State"];
-      }
-      else{
-         if(!empty($location)){
+      } else {
+         if (!empty($location)) {
             $result[$key]["locality"] = "Locality info not found";
             $result[$key]["state"] = "State info not found";
          }
@@ -313,13 +310,13 @@ function deletePropertyById($id) {
       echo "Exception: " . $e->getMessage();
    }
 }
-function temp($p,$n){
+function temp($p, $n) {
    echo $p;
    echo $n;
 }
-function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqft, $Address, $Locality,$State, $price) {
+function UpdatePropertyById($pid, $houseStyle, $status, $title, $bath, $bed, $sqft, $Address, $Locality, $State, $price) {
    global $db;
-   $db->beginTransaction();  
+   $db->beginTransaction();
    try {
       echo "Preparing to execute stored procedure...";
       $query = "CALL UpdateProcedure(:input_pid,:newHouseStyle, :newStatus, :newBrokerName, :newBathrooms, :newBedrooms, :newSQFT, :newAddress, :newLocality, :newState, :newPrice)";
@@ -341,7 +338,7 @@ function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqf
       $statement->execute();
       echo "Stored procedure executed.";
       echo $price;
-      $db->commit();  
+      $db->commit();
       $statement->closeCursor();
       // header("Location: viewProperty.php");
    } catch (PDOException $e) {
@@ -350,4 +347,83 @@ function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqf
    } catch (Exception $e) {
       echo "Exception: " . $e->getMessage();
    }
+}
+function exportJson() {
+   global $db;
+   $query = "SELECT * FROM Property";
+   $statement = $db->prepare($query);    // compile
+   $statement->execute();
+   $result = $statement->fetchAll();     // fetch()
+   $statement->closeCursor();
+   foreach ($result as $key => $property) {
+      $pid = $property["pid"];
+      $featuresquery = "SELECT * FROM Features WHERE pid=:pid";
+      $statement2 = $db->prepare($featuresquery);
+      $statement2->bindValue(':pid', $pid);
+      $statement2->execute();
+      $features = $statement2->fetchAll();
+      $statement2->closeCursor();
+      if (!empty($features)) {
+         $result[$key]["bed"] = $features[0]["bed"];
+         $result[$key]["bath"] = $features[0]["bath"];
+         $result[$key]["sqft"] = $features[0]["sqft"];
+      } else {
+         $result[$key]["bed"] = "Bed info not found";
+         $result[$key]["bath"] = "Bath info not found";
+         $result[$key]["sqft"] = "Sqft info not found";
+      }
+      $brokerquery = "SELECT * FROM Broker WHERE pid=:pid";
+      $statement3 = $db->prepare($brokerquery);
+      $statement3->bindValue(':pid', $pid);
+      $statement3->execute();
+      $broker = $statement3->fetchAll();
+      $statement3->closeCursor();
+      if (!empty($broker)) {
+         $result[$key]["title"] = $broker[0]["title"];
+      } else {
+         if (!empty($broker)) {
+            $result[$key]["title"] = "Broker info not found";
+         }
+      }
+      $typequery = "SELECT * FROM Type WHERE pid=:pid";
+      $statement4 = $db->prepare($typequery);
+      $statement4->bindValue(':pid', $pid);
+      $statement4->execute();
+      $Type = $statement4->fetchAll();
+      $statement4->closeCursor();
+      if (!empty($Type)) {
+         $result[$key]["status"] = $Type[0]["status"];
+         $result[$key]["housestyle"] = $Type[0]["housestyle"];
+      } else {
+         if (!empty($Type)) {
+            $result[$key]["status"] = "Status info not found";
+            $result[$key]["housestyle"] = "Housestyle info not found";
+         }
+      }
+      $locationquery = "SELECT * FROM Location WHERE pid=:pid";
+      $statement5 = $db->prepare($locationquery);
+      $statement5->bindValue(':pid', $pid);
+      $statement5->execute();
+      $location = $statement5->fetchAll();
+      $statement5->closeCursor();
+      if (!empty($location)) {
+         $result[$key]["locality"] = $location[0]["Locality"];
+         $result[$key]["state"] = $location[0]["State"];
+      } else {
+         if (!empty($location)) {
+            $result[$key]["locality"] = "Locality info not found";
+            $result[$key]["state"] = "State info not found";
+         }
+      }
+   }
+   $json = json_encode($result);
+    if ($json === false) {
+        echo "JSON encode error: " . json_last_error_msg();
+        return;
+    }
+
+    header('Content-Type: application/json');
+    header('Content-Disposition: attachment; filename="export.json"');
+    echo $json;
+    exit();
 }
