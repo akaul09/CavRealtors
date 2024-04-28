@@ -274,14 +274,12 @@ function temp($p,$n){
 }
 function UpdatePropertyById($pid,$houseStyle, $price, $name, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
    global $db;
-   $db->beginTransaction();  // Start the transaction
-
+   $db->beginTransaction();  
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL UpdateProperty(:pid,:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL UpdateProcedure(:pid,:housestyle, :price, :name, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
       $statement = $db->prepare($query);
 
-      // Bind parameters
       $statement->bindValue(':pid', $pid);
       $statement->bindValue(':housestyle', $houseStyle);
       $statement->bindValue(':price', $price);
