@@ -8,6 +8,9 @@ $propertiesPerPage = 10;
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $properties = getAllProperties($page, $propertiesPerPage);
 }
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    exportJson();
+}
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <input class="form-control" type="search" placeholder="Search properties">
         </div>
     </div>
-    
+    <form class="exportProp" method="post" action="viewProperty.php">
+        <button type="submit">Export Data as JSON</button>
+    </form>
     <?php foreach ($properties as $property): ?>
     <div class="card">
         <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" style="text-decoration: none; color: inherit;">
