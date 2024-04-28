@@ -274,16 +274,16 @@ function getPropertyById($id) {
       $statement5 = $db->prepare($locationquery);
       $statement5->bindValue(':pid', $pid);
       $statement5->execute();
-      $Type = $statement5->fetchAll();
+      $location = $statement5->fetchAll();
       $statement5->closeCursor();
-      if(!empty($Type)){
-         $result[$key]["Locality"] = $Type[0]["status"];
-         $result[$key]["housestyle"] = $Type[0]["housestyle"];
+      if(!empty($location)){
+         $result[$key]["locality"] = $location[0]["Locality"];
+         $result[$key]["state"] = $location[0]["State"];
       }
       else{
-         if(!empty($Type)){
-            $result[$key]["status"] = "Status info not found";
-            $result[$key]["housestyle"] = "Housestyle info not found";
+         if(!empty($location)){
+            $result[$key]["locality"] = "Locality info not found";
+            $result[$key]["state"] = "State info not found";
          }
       }
    }
@@ -317,25 +317,25 @@ function temp($p,$n){
    echo $p;
    echo $n;
 }
-function UpdatePropertyById($pid,$houseStyle, $price, $Address, $title, $bath, $bed, $sqft, $State, $Locality, $status) {
+function UpdatePropertyById($pid,$houseStyle, $status, $title, $bath, $bed, $sqft, $Address, $Locality,$State, $price) {
    global $db;
    $db->beginTransaction();  
    try {
       echo "Preparing to execute stored procedure...";
-      $query = "CALL UpdateProcedure(:pid,:housestyle, :price, :Address, :title, :bath, :bed, :sqft, :State, :Locality, :status)";
+      $query = "CALL UpdateProcedure(:pid,:housestyle, :status, :title, :bath, :bed, :sqft, :Address, :Locality, :State, :price)";
       $statement = $db->prepare($query);
 
       $statement->bindValue(':pid', $pid);
       $statement->bindValue(':housestyle', $houseStyle);
-      $statement->bindValue(':price', $price);
-      $statement->bindValue(':Address', $Address);
+      $statement->bindValue(':status', $status);
       $statement->bindValue(':title', $title);
       $statement->bindValue(':bath', $bath);
       $statement->bindValue(':bed', $bed);
       $statement->bindValue(':sqft', $sqft);
-      $statement->bindValue(':State', $State);
+      $statement->bindValue(':Address', $Address);
       $statement->bindValue(':Locality', $Locality);
-      $statement->bindValue(':status', $status);
+      $statement->bindValue(':State', $State);
+      $statement->bindValue(':price', $price);
 
 
       $statement->execute();

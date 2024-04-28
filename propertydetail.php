@@ -34,7 +34,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        UpdatePropertyById(intval($_POST['pid']), $details[0]['houseStyle'], intval($_POST['price']), $details[0]['address'], $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['state'], $details[0]['locality'], $_POST['status']);
+        UpdatePropertyById(intval($_POST['pid']), $details[0]['houseStyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['address'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
