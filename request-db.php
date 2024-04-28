@@ -195,7 +195,24 @@ function getAllProperties($page = 1, $propertiesPerPage = 10) {
    $statement->bindValue(':propertiesPerPage', $propertiesPerPage, PDO::PARAM_INT);
    $statement->execute();
    $properties = $statement->fetchAll();
-   $statement->closeCursor();
+   foreach ($properties as $key => $property) {
+      $pid = $property["pid"];
+      $featuresQuery = "SELECT * FROM Features WHERE pid=:pid";
+      $featuresStmt = $db->prepare($featuresQuery);
+      $featuresStmt->bindValue(':pid', $pid);
+      $featuresStmt->execute();
+      $features = $featuresStmt->fetchAll();
+      $featuresStmt->closeCursor();
+      if (!empty($features)) {
+          $properties[$key]["bed"] = $features[0]["bed"];
+          $properties[$key]["bath"] = $features[0]["bath"];
+          $properties[$key]["sqft"] = $features[0]["sqft"];
+      } else {
+          $properties[$key]["bed"] = "Bed info not found";
+          $properties[$key]["bath"] = "Bath info not found";
+          $properties[$key]["sqft"] = "Sqft info not found";
+      }
+  }
    return $properties;
 }
 

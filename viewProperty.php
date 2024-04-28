@@ -36,19 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     </div>
     
     <?php foreach ($properties as $property): ?>
-    <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" class="card" style="text-decoration: none; color: inherit;">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
-                    <p class="card-text">
-                        <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?> <br>
-                    </p>
+    <div class="card">
+        <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" style="text-decoration: none; color: inherit;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="card-title"><?php echo htmlspecialchars($property['name']); ?></h3>
+                        <p class="card-text">
+                            <strong>Price:</strong> <?php echo htmlspecialchars($property['price']); ?><br>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
     <?php endforeach; ?>
+
     <nav>
     <ul class="pagination">
         <?php
@@ -56,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $totalProperties = $countQuery->fetchColumn();
         $totalPages = ceil($totalProperties / $propertiesPerPage);
         $range = 2; 
-        
+
         if ($page > 1) {
             echo '<li class="page-item"><a class="page-link" href="?page=' . ($page - 1) . '">Previous</a></li>';
         }
