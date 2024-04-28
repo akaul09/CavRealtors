@@ -9,6 +9,40 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+        }
+        .footer a {
+            margin: 0 10px;
+        }
+        .full-height-image {
+            background-image: url('assets/homeImage.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px; 
+        }
+        .logout-button {
+        background-color: #dc3545; 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+        background-color: #c82333; 
+        }
+    </style>
 </head>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -24,6 +58,22 @@
 </script>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.php">
+            <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+            <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
+            <form method="post" action="profile.php">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </nav>
     <?php require("connect-db.php"); ?>
     <?php require("request-db.php"); ?>
 
