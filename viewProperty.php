@@ -53,7 +53,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var type = localStorage.getItem("type");
+        var navbarAdmin = document.getElementById("navbarAdmin");
+        var navbarUser = document.getElementById("navbarUser");
+
+        if (type === "Admin") {
+            navbarAdmin.style.display = "block";
+            navbarUser.style.display = "none";
+        } else {
+            navbarAdmin.style.display = "none";
+            navbarUser.style.display = "block";
+        }
+    });
+</script>
+<!-- Admin Navigation Bar -->
+<nav id="navbarAdmin" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
+    <div class="container-fluid"> 
+        <a class="navbar-brand" href="landingPage.php">
+            <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav">
+                <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+                <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
+                <form method="post" action="profile.php">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- User Navigation Bar -->
+<nav id="navbarUser" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
     <div class="container-fluid"> 
         <a class="navbar-brand" href="landingPage.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
@@ -72,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         </div>
     </div>
 </nav>
-
 
 <div class="container">    
     <div class="row mb-3">
