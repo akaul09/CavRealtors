@@ -50,10 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         background-color: #c82333; 
         }
     </style>
+    
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+    <div class="container-fluid"> 
         <a class="navbar-brand" href="landingPage.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>

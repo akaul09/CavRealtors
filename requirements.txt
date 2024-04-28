@@ -5,3 +5,15 @@
 - make sure navigation etc works like it should (take anushka's help)
 - ensure all promised functionalities are covered
 - 10 tables??
+
+
+--new
+- fix UI for signUp  done
+-- possibly look at search 
+
+--UI for property detail 
+-- UI for add property only if admin button in nav bar 
+
+-- display profile button on Nav bar after logging in 
+
+
