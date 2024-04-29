@@ -6,7 +6,6 @@ function addProperty($houseStyle, $price, $Address, $title, $bath, $bed, $sqft, 
    $db->beginTransaction();
 
    try {
-      echo "Preparing to execute stored procedure...";
       $query = "CALL AddProperty(:housestyle, :price, :Address, :brokerName, :bath, :bed, :sqft, :State, :Locality, :status)";
       $statement = $db->prepare($query);
 
@@ -24,7 +23,6 @@ function addProperty($houseStyle, $price, $Address, $title, $bath, $bed, $sqft, 
 
 
       $statement->execute();
-      echo "Stored procedure executed.";
       $db->commit();  // Commit the transaction
       $statement->closeCursor();  // Close the cursor to free connection resources
    } catch (PDOException $e) {
@@ -154,7 +152,7 @@ function logout() {
    echo "<script>
    localstorage.clear();
  </script>";
-   header("Location: landingPage.php");
+   header("Location: index.php");
    exit();
 }
 function custLogin($username, $password) {
