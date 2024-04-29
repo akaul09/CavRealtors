@@ -437,3 +437,13 @@ function sortPrices(){
    $statement->closeCursor();
    return $result;
 }
+
+function sortPricesDesc(){
+   global $db;
+   $query = "SELECT * FROM Property ORDER BY price DESC";
+   $statement = $db->prepare($query);    
+   $statement->execute();
+   $result = $statement->fetchAll();     
+   $statement->closeCursor();
+   return $result;
+}
