@@ -172,6 +172,7 @@
                                 <option value="Contigent" <?php echo ($details[0]["status"] == 'Contigent') ? 'selected' : ''; ?>>Contigent</option>
                                 <option value="Foreclosure" <?php echo ($details[0]["status"] == 'Foreclosure') ? 'selected' : ''; ?>>Foreclosure</option>
                                 <option value="sale" <?php echo ($details[0]["status"] == 'sale') ? 'selected' : ''; ?>>Sale</option>
+                                <option value="not_available" <?php echo ($details[0]["status"] == 'not_available') ? 'selected' : ''; ?>>Not Available</option>
                             </select>
                         </div>
                     </div>
