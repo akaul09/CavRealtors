@@ -9,27 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-        }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #f5f5f5;
-        }
-        .footer a {
-            margin: 0 10px;
-        }
-        .full-height-image {
-            background-image: url('assets/homeImage.jpg');
-            background-size: cover;
-            background-position: center;
-            min-height: 400px; 
-        }
         .logout-button {
         background-color: #dc3545; 
         color: white;
@@ -55,10 +35,22 @@
             document.getElementById("update2").style.display = 'none';
         }
     });
-</script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var type = localStorage.getItem("type");
+        var navbarAdmin = document.getElementById("navbarAdmin");
+        var navbarUser = document.getElementById("navbarUser");
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        if (type === "Admin") {
+            navbarAdmin.style.display = "block";
+            navbarUser.style.display = "none";
+        } else {
+            navbarAdmin.style.display = "none";
+            navbarUser.style.display = "block";
+        }
+    });
+</script>
+<nav id="navbarAdmin" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
+    <div class="container-fluid"> 
         <a class="navbar-brand" href="index.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>
@@ -67,13 +59,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
-            <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
-            <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
-            <form method="post" action="profile.php">
-                <button type="submit" class="logout-button">Logout</button>
-            </form>
+            <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
+                <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+                <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
+                <form method="post" action="profile.php">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<nav id="navbarUser" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
+    <div class="container-fluid"> 
+        <a class="navbar-brand" href="index.php">
+            <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
+                <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
+                <form method="post" action="profile.php">
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+<body>
     <?php require("connect-db.php"); ?>
     <?php require("request-db.php"); ?>
 
@@ -86,7 +104,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
         echo "pid: " . intval($details[0]['pid']) . "\n";
         echo "title: " . $details[0]['title'] . "\n";
-        echo "address: " . $details[0]['name'] . "\n";
+        echo "address: " . $details[0]['Address'] . "\n";
         UpdatePropertyById(intval($details[0]['pid']), $details[0]['housestyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['name'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
     }
 
@@ -104,7 +122,6 @@
                 <strong>Square Feet:</strong> <?php echo htmlspecialchars($property['sqft']); ?><br>
                 <strong>Beds:</strong> <?php echo htmlspecialchars($property['bed']); ?><br>
                 <strong>Bathrooms:</strong> <?php echo htmlspecialchars($property['bath']); ?><br>
-                <strong>Status:</strong> <?php echo htmlspecialchars($property['status']); ?><br>
             </p>
 
             <button type="button" name="update2" id="update2" class="btn btn-primary" onclick="openUpdateModal(<?php echo htmlspecialchars(json_encode($property)); ?>)">Update</button>
@@ -143,6 +160,7 @@
                             <label for="modalBaths">Bathrooms:</label>
                             <input type="float" class="form-control" id="modalBaths" name="bath" value="<?php echo $details[0]["bath"]; ?>" required>
                         </div>
+                       
                         <div class="form-group">
                             <label for="status" class="form-label">Status: </label>
                             <select class="form-select" id="status" name="status" required>

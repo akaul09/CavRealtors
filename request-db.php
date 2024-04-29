@@ -290,13 +290,43 @@ function deletePropertyById($id) {
    $db->beginTransaction();  // Start the transaction
 
    try {
-      echo "Calling delete";
-      $query = "CALL DeleteProperty(:input_pid)";
+      <style>
+      body, html {
+          height: 100%;
+          margin: 0;
+      }
+      .footer {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          background-color: #f5f5f5;
+      }
+      .footer a {
+          margin: 0 10px;
+      }
+      .full-height-image {
+          background-image: url('assets/homeImage.jpg');
+          background-size: cover;
+          background-position: center;
+          min-height: 400px; 
+      }
+      .logout-button {
+      background-color: #dc3545; 
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      }
+      .logout-button:hover {
+      background-color: #c82333; 
+      }
+  </style>      $query = "CALL DeleteProperty(:input_pid)";
       $statement = $db->prepare($query);
 
       $statement->bindValue(':input_pid', intval($id));
       $statement->execute();
-      echo "delete executed";
       $db->commit();
       $statement->closeCursor();
       header("Location: viewProperty.php");
@@ -316,7 +346,6 @@ function UpdatePropertyById($pid, $houseStyle, $status, $title, $bath, $bed, $sq
    global $db;
    $db->beginTransaction();
    try {
-      echo "Preparing to execute stored procedure...";
       $query = "CALL UpdateProcedure(:input_pid,:newHouseStyle, :newStatus, :newBrokerName, :newBathrooms, :newBedrooms, :newSQFT, :newAddress, :newLocality, :newState, :newPrice)";
       $statement = $db->prepare($query);
 
@@ -334,7 +363,6 @@ function UpdatePropertyById($pid, $houseStyle, $status, $title, $bath, $bed, $sq
 
 
       $statement->execute();
-      echo "Stored procedure executed.";
       // echo $price;
       $db->commit(); 
       $statement->closeCursor();

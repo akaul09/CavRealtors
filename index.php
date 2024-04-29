@@ -28,7 +28,7 @@
             background-image: url('assets/homeImage.jpg');
             background-size: cover;
             background-position: center;
-            min-height: 400px; /* Adjust this value based on your needs */
+            min-height: 400px; 
         }
     </style>
 </head>
