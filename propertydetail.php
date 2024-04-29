@@ -102,9 +102,6 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
-        echo "pid: " . intval($details[0]['pid']) . "\n";
-        echo "title: " . $details[0]['title'] . "\n";
-        echo "address: " . $details[0]['Address'] . "\n";
         UpdatePropertyById(intval($details[0]['pid']), $details[0]['housestyle'], $_POST['status'],  $details[0]['title'], floatval($_POST['bath']), intval($_POST['bed']), intval($_POST['sqft']), $details[0]['name'], $details[0]['locality'],  $details[0]['state'], intval($_POST['price']));
     }
 
