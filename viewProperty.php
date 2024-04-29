@@ -6,9 +6,10 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $propertiesPerPage = 10;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ($_GET['sortPrice']=='true') {
-        echo "ENTERED SORT PRICE";
+    if ($_GET['sortPrice'] == 'asc') {
         $properties = sortPrices();
+    } elseif ($_GET['sortPrice'] == 'desc') {
+        $properties = sortPricesDesc();
     }else {
         $properties = getAllProperties($page, $propertiesPerPage);
     }
@@ -120,17 +121,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 </nav>
 
 <div class="container">    
-    <div class="row mb-3">
-        <div class="col-md-8">
-            <input class="form-control" type="search" placeholder="Search properties">
-        </div>
-    </div>
-    <form class="exportProp" method="post" action="viewProperty.php">
+<div class="container">
+    <form class="exportProp" method="post" action="viewProperty.php" style="display: inline-block; margin-right: 10px;">
         <button type="submit">Export Data as JSON</button>
     </form>
-    <form class="sortPrice" method="get" action="viewProperty.php">
-        <button type="submit" name="sortPrice" value="true">Sort By Price</button>
+    <form class="sortPrice" method="get" action="viewProperty.php" style="display: inline-block; margin-right: 10px;">
+        <button type="submit" name="sortPrice" value="asc">Sort By Price Ascending</button>
     </form>
+    <form class="sortPrice" method="get" action="viewProperty.php" style="display: inline-block;">
+        <button type="submit" name="sortPrice" value="desc">Sort By Price Descending</button>
+    </form>
+</div>
+
     <?php foreach ($properties as $property): ?>
     <div class="card">
         <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" style="text-decoration: none; color: inherit;">
