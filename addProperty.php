@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br><br>
                 <div class="mb-3">
                     <label for="county" class="form-label">County</label>
-                    <input type="text" class="form-control" id="county" id="county" required>
+                    <input type="text" class="form-control" id="county" name="county" required>
                     <div class="invalid-feedback">
                         Please provide the county.
                     </div>
