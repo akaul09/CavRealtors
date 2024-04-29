@@ -6,10 +6,16 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $propertiesPerPage = 10;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $properties = getAllProperties($page, $propertiesPerPage);
+    if ($_GET['sortPrice'] == 'asc') {
+        $properties = sortPrices();
+    } elseif ($_GET['sortPrice'] == 'desc') {
+        $properties = sortPricesDesc();
+    }else {
+        $properties = getAllProperties($page, $propertiesPerPage);
+    }
 }
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    exportJson();
+        exportJson();
 }
 ?>
 
@@ -74,7 +80,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <!-- Admin Navigation Bar -->
 <nav id="navbarAdmin" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
     <div class="container-fluid"> 
-        <a class="navbar-brand" href="landingPage.php">
+        <a class="navbar-brand" href="index.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
@@ -83,6 +89,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
                 <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
                 <a class="btn btn-bordered" href="addProperty.php">Add Property</a>
                 <form method="post" action="profile.php">
@@ -96,7 +103,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <!-- User Navigation Bar -->
 <nav id="navbarUser" class="navbar navbar-expand-lg navbar-light bg-light" style="display: none;">
     <div class="container-fluid"> 
-        <a class="navbar-brand" href="landingPage.php">
+        <a class="navbar-brand" href="index.php">
             <img src="assets/logo.png" alt="CavRealtors Logo" style="height: 40px; margin-right: 10px;">CavRealtors
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent"
@@ -105,6 +112,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav">
+                <a class="btn btn-bordered" href="profile.php">Profile</a>
                 <a class="btn btn-bordered" href="viewProperty.php">Browse Listings</a>
                 <form method="post" action="profile.php">
                     <button type="submit" class="logout-button">Logout</button>
@@ -115,14 +123,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 </nav>
 
 <div class="container">    
-    <div class="row mb-3">
-        <div class="col-md-8">
-            <input class="form-control" type="search" placeholder="Search properties">
-        </div>
-    </div>
-    <form class="exportProp" method="post" action="viewProperty.php">
+<div class="container">
+    <form class="exportProp" method="post" action="viewProperty.php" style="display: inline-block; margin-right: 10px;">
         <button type="submit">Export Data as JSON</button>
     </form>
+    <form class="sortPrice" method="get" action="viewProperty.php" style="display: inline-block; margin-right: 10px;">
+        <button type="submit" name="sortPrice" value="asc">Sort By Price Ascending</button>
+    </form>
+    <form class="sortPrice" method="get" action="viewProperty.php" style="display: inline-block;">
+        <button type="submit" name="sortPrice" value="desc">Sort By Price Descending</button>
+    </form>
+</div>
+
     <?php foreach ($properties as $property): ?>
     <div class="card">
         <a href="propertydetail.php?pid=<?php echo urlencode($property['pid']); ?>" style="text-decoration: none; color: inherit;">
