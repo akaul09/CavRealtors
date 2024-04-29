@@ -431,8 +431,9 @@ function exportJson() {
 function sortPrices(){
    global $db;
    $query = "SELECT * FROM Property ORDER BY price ASC";
-   $statement = $db->prepare($query);    // compile
+   $statement = $db->prepare($query);    
    $statement->execute();
-   $result = $statement->fetchAll();     // fetch()
+   $result = $statement->fetchAll();     
    $statement->closeCursor();
+   return $result;
 }

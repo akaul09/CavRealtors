@@ -6,10 +6,15 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $propertiesPerPage = 10;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $properties = getAllProperties($page, $propertiesPerPage);
+    if ($_GET['sortPrice']=='true') {
+        echo "ENTERED SORT PRICE";
+        $properties = sortPrices();
+    }else {
+        $properties = getAllProperties($page, $propertiesPerPage);
+    }
 }
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    exportJson();
+        exportJson();
 }
 ?>
 
@@ -122,6 +127,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </div>
     <form class="exportProp" method="post" action="viewProperty.php">
         <button type="submit">Export Data as JSON</button>
+    </form>
+    <form class="sortPrice" method="get" action="viewProperty.php">
+        <button type="submit" name="sortPrice" value="true">Sort By Price</button>
     </form>
     <?php foreach ($properties as $property): ?>
     <div class="card">
