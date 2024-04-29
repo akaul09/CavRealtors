@@ -64,6 +64,9 @@ function signupAdmin($fname, $lname, $username, $password) {
       echo "<script>
       localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
       localStorage.setItem('type', 'Admin');
+      localStorage.setItem('fname', '" . htmlspecialchars($fname, ENT_QUOTES) . "');
+      localStorage.setItem('lname', '" . htmlspecialchars($lname, ENT_QUOTES) . "');
+
       window.location.href = 'profile.php';
     </script>";
       exit();
@@ -108,6 +111,8 @@ function signupNormal($fname, $lname, $username, $password) {
       echo "<script>
       localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
       localStorage.setItem('type', 'Customer');
+      localStorage.setItem('fname', '" . htmlspecialchars($fname, ENT_QUOTES) . "');
+      localStorage.setItem('lname', '" . htmlspecialchars($lname, ENT_QUOTES) . "');
       window.location.href = 'profile.php';
     </script>";
       exit();
@@ -128,19 +133,23 @@ function Adminlogin($username, $password) {
    if (
       !empty($username) && !empty($password)
    ) {
-      $query = "select * from Admin where username = :username;";
+      $query = "select * from Admin NATURAL JOIN User where username = :username;";
       $statement = $db->prepare($query);
       $statement->bindValue(':username', $username);
       $statement->execute();
       $res = $statement->fetchAll();
       $statement->closeCursor();
+      $fname = $res[0]["fname"];
+      $lname = $res[0]["lname"];
       if (!empty($res)) {
          if (password_verify($password, $res[0]["pword"])) {
             // Instead of setting session variables, we output JavaScript.
             echo "<script>
                     localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
                     localStorage.setItem('type', 'Admin');
-                    window.location.href = 'profile.php';
+                    localStorage.setItem('fname', '" . htmlspecialchars($fname, ENT_QUOTES) . "');
+                     localStorage.setItem('lname', '" . htmlspecialchars($lname, ENT_QUOTES) . "');
+                     window.location.href = 'profile.php';
                   </script>";
             exit();
          } else {
@@ -162,19 +171,23 @@ function custLogin($username, $password) {
    if (
       !empty($username) && !empty($password)
    ) {
-      $query = "select * from NormalUser where username = :username;";
+      $query = "select * from NormalUser NATURAL JOIN User where username = :username;";
       $statement = $db->prepare($query);
       $statement->bindValue(':username', $username);
       $statement->execute();
       $res = $statement->fetchAll();
       $statement->closeCursor();
+      $fname = $res[0]["fname"];
+      $lname = $res[0]["lname"];
       if (!empty($res)) {
          if (password_verify($password, $res[0]["pword"])) {
             // Instead of setting session variables, we output JavaScript.
             echo "<script>
                     localStorage.setItem('username', '" . htmlspecialchars($username, ENT_QUOTES) . "');
                     localStorage.setItem('type', 'Customer');
-                    window.location.href = 'profile.php';
+                    localStorage.setItem('fname', '" . htmlspecialchars($fname, ENT_QUOTES) . "');
+                     localStorage.setItem('lname', '" . htmlspecialchars($lname, ENT_QUOTES) . "');
+                  window.location.href = 'profile.php';
                   </script>";
             exit();
          } else {
@@ -338,7 +351,7 @@ function UpdatePropertyById($pid, $houseStyle, $status, $title, $bath, $bed, $sq
       $statement->execute();
       echo "Stored procedure executed.";
       // echo $price;
-      $db->commit(); 
+      $db->commit();
       $statement->closeCursor();
       header("Location: viewProperty.php");
    } catch (PDOException $e) {
@@ -417,13 +430,13 @@ function exportJson() {
       }
    }
    $json = json_encode($result);
-    if ($json === false) {
-        echo "JSON encode error: " . json_last_error_msg();
-        return;
-    }
+   if ($json === false) {
+      echo "JSON encode error: " . json_last_error_msg();
+      return;
+   }
 
-    header('Content-Type: application/json');
-    header('Content-Disposition: attachment; filename="export.json"');
-    echo $json;
-    exit();
+   header('Content-Type: application/json');
+   header('Content-Disposition: attachment; filename="export.json"');
+   echo $json;
+   exit();
 }
