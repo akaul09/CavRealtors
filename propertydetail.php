@@ -119,6 +119,7 @@
                 <strong>Square Feet:</strong> <?php echo htmlspecialchars($property['sqft']); ?><br>
                 <strong>Beds:</strong> <?php echo htmlspecialchars($property['bed']); ?><br>
                 <strong>Bathrooms:</strong> <?php echo htmlspecialchars($property['bath']); ?><br>
+                <strong>Status:</strong> <?php echo htmlspecialchars($property['status']); ?><br>
             </p>
 
             <button type="button" name="update2" id="update2" class="btn btn-primary" onclick="openUpdateModal(<?php echo htmlspecialchars(json_encode($property)); ?>)">Update</button>
